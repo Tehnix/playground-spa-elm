@@ -5,22 +5,19 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [11.6.0]
 
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js 11.6.0
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 11.6.0
       - name: Build project
         env:
           CI: true
         run: |
           npm install -g elm
-          elm make
+          elm make src/Main.elm
       - name: Run tests
         env:
           CI: true
