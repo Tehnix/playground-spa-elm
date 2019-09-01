@@ -1,4 +1,4 @@
-name: Node CI
+name: Build and Test CI
 
 on: [push]
 
@@ -24,4 +24,4 @@ jobs:
         run: |
           npm install -g elm-test elm-verify-examples
           elm-verify-examples
-          elm test
+          elm-test
