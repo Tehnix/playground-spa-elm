@@ -7,4 +7,5 @@ import Test exposing (..)
 
 suite : Test
 suite =
-    todo "Implement our first test. See https://package.elm-lang.org/packages/elm-explorations/test/latest for how to do this!"
+    test "Implement our first test. See https://package.elm-lang.org/packages/elm-explorations/test/latest for how to do this!" <|
+        \_ -> 1 + 1 |> Expect.equal 2

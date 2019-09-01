@@ -5,7 +5,7 @@ Playing around with Elm SPAs and structuring them for larger scale applications
 To get started, make sure you have the [Elm toolchain installed](https://guide.elm-lang.org/install.html). Beyond that, we also need a few more command line tools that we use.
 
 ```bash
-$ npm install -g elm-format elm-test elm-verify-examples
+$ npm install -g elm-format elm-test elm-verify-examples elm-analyse
 ```
 
 ### Unit Tests
