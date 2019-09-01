@@ -23,7 +23,8 @@ jobs:
           CI: true
         run: |
           npm install -g elm-test elm-verify-examples
-          elm-analyse
+          elm-verify-examples
+          elm-test
       - name: Analyse program
         env:
           CI: true
