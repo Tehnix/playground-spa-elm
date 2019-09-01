@@ -1,4 +1,4 @@
-name: Build and Test CI
+name: CI
 
 on: [push]
 
@@ -13,25 +13,14 @@ jobs:
           node-version: 11.6.0
       - name: Install dependencies
         run: |
-          npm install -g elm # elm-test elm-verify-examples elm-analyse
+          npm install -g elm
       - name: Build project
         env:
           CI: true
         run: |
           elm make src/Main.elm
-      # - name: Run tests
-      #   env:
-      #     CI: true
-      #   run: |
-      #     elm-verify-examples
-      #     elm-test
-      # - name: Analyse program
-      #   env:
-      #     CI: true
-      #   run: |
-      #     elm-analyse
 
-  test:
+  Test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -49,7 +38,7 @@ jobs:
           elm-verify-examples
           elm-test
 
-  analyse:
+  Analyse:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
