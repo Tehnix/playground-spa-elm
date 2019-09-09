@@ -27,7 +27,10 @@ Running `elm-verify-examples --run-tests` will both generate and validate these 
 ### CI
 We use Github actions to build the project, run tests, and run doc tests in the CI pipeline. Check out the workflows in `.github/workflows/` to see the specific workflows that are set up.
 
-### Interesting Resources
+### Resources
 
+- [Intro to Elm](https://guide.elm-lang.org)
 - [Scaling Views with Master View Types](https://discourse.elm-lang.org/t/scaling-views-with-master-view-types/4014)
 - [elm-program-test](https://discourse.elm-lang.org/t/elm-program-test-3-0-0-new-docs-support-for-http-and-ports/4235)
+- [elm-verify-examples](https://github.com/stoeffel/elm-verify-examples)
+- [elm-test](https://github.com/elm-community/elm-test)
