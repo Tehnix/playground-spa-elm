@@ -31,6 +31,16 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 
 - [Intro to Elm](https://guide.elm-lang.org)
 - [Scaling Views with Master View Types](https://discourse.elm-lang.org/t/scaling-views-with-master-view-types/4014)
+- [Real World Elm SPA Example](https://github.com/rtfeldman/elm-spa-example)
+
+**Testing:**
+
 - [elm-program-test](https://discourse.elm-lang.org/t/elm-program-test-3-0-0-new-docs-support-for-http-and-ports/4235)
 - [elm-verify-examples](https://github.com/stoeffel/elm-verify-examples)
 - [elm-test](https://github.com/elm-community/elm-test)
+
+**Some base library functions that one should be familiar with:**
+
+- [Url Parser](https://package.elm-lang.org/packages/elm/url/latest/Url-Parser)
+- [Browser (specifically application)](https://package.elm-lang.org/packages/elm/browser/latest/Browser#application)
+- [Browser Navigation](https://package.elm-lang.org/packages/elm/browser/1.0.0/Browser-Navigation)
