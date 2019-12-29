@@ -18,7 +18,7 @@
     "minify": "uglifyjs dist/elm.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters=true,keep_fargs=false,unsafe_comps=true,unsafe=true,passes=2' --mangle --output=dist/elm.min.js --source-map url=elm.min.js.map",
     "elm:compile": "elm make src/Main.elm --output=dist/elm.js --optimize",
     "elm:compile:dev": "elm make src/Main.elm --output=dist/elm.js",
-    "elm:live": "elm-live src/Main.elm --start-page=index.dev.html --open --pushstate --port=1234 -- --output=dist/elm.js --debug"
+    "elm:live": "elm-live src/Main.elm --start-page=index.dev.html --hot --open --pushstate --port=1234 -- --output=dist/elm.js --debug"
   },
   "dependencies": {
     "elm": "0.19.1-3",

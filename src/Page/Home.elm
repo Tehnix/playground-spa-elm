@@ -1,41 +1,42 @@
-module Page.Home exposing (Model, Msg, init, update)
+module Page.Home exposing (Model, Msg, init, update, view)
 
 import Global as Global
+import Helper.Bool exposing (bool, when)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick, onInput)
 
 
 type alias Model =
     { text : String
-    , color : Color
+    , showReversed : Bool
     }
 
 
 type Msg
     = ReverseText
-    | ToggleColor
-
-
-type Color
-    = Green
-    | Red
+    | ChangeInput String
 
 
 init : Model
 init =
-    { text = "", color = Green }
+    { text = "", showReversed = False }
+
+
+view : Global.Model -> Model -> Html Msg
+view _ model =
+    div []
+        [ input [ placeholder "Text to reverse", value model.text, onInput ChangeInput ] []
+        , div [] [ text (when model.showReversed String.reverse model.text) ]
+        , button [ onClick ReverseText ] [ text "Reverse Text" ]
+        ]
 
 
 update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )
-update global msg model =
+update _ msg model =
     case msg of
-        ToggleColor ->
-            case model.color of
-                Green ->
-                    ( { model | color = Red }, Cmd.none, Cmd.none )
-
-                Red ->
-                    ( { model | color = Green }, Cmd.none, Cmd.none )
-
         ReverseText ->
-            ( { model | text = String.reverse model.text }, Cmd.none, Cmd.none )
+            ( { model | showReversed = bool True False model.showReversed }, Cmd.none, Cmd.none )
+
+        ChangeInput newText ->
+            ( { model | text = newText }, Cmd.none, Cmd.none )

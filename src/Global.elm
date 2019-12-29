@@ -1,4 +1,4 @@
-module Global exposing (Model, Msg(..), init, update)
+module Global exposing (Model, Msg(..), User(..), init, update)
 
 {-| In this module, we keep our global state and messages, which pages
 might need to access (via the model) or trigger events (via the msg),
@@ -10,6 +10,7 @@ such as user information or logout events.
 -}
 type alias Model =
     { user : User
+    , language : String
     }
 
 
@@ -21,7 +22,9 @@ type Msg
 
 
 type alias UserInfo =
-    { username : String }
+    { username : String
+    , email : String
+    }
 
 
 type User
@@ -31,7 +34,7 @@ type User
 
 init : Model
 init =
-    { user = Unauthenticated }
+    { user = Unauthenticated, language = "en" }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

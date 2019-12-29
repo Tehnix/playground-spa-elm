@@ -3,6 +3,7 @@
   "tests": [
     "./README.md",
     "Route",
-    "Main"
+    "Helper.Bool",
+    "Helper.Maybe"
   ]
 }

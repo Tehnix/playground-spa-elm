@@ -44,3 +44,5 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Url Parser](https://package.elm-lang.org/packages/elm/url/latest/Url-Parser)
 - [Browser (specifically application)](https://package.elm-lang.org/packages/elm/browser/latest/Browser#application)
 - [Browser Navigation](https://package.elm-lang.org/packages/elm/browser/1.0.0/Browser-Navigation)
+- [Tasks](https://package.elm-lang.org/packages/elm/core/1.0.4/Task)
+- [Debug](https://package.elm-lang.org/packages/elm-lang/core/3.0.0/Debug)
