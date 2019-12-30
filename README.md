@@ -1,17 +1,44 @@
 # Elm SPA Playground
-Playing around with Elm SPAs and structuring them for larger scale applications
+Playing around with Elm SPAs and structuring them for larger scale applications.
 
-### Tooling
-To get started, make sure you have the [Elm toolchain installed](https://guide.elm-lang.org/install.html). Beyond that, we also need a few more command line tools that we use.
+#### Getting Started
+Everything is set up in package.json, meaning you just have to run,
 
 ```bash
-$ npm install -g elm-format elm-test elm-verify-examples elm-analyse
+$ npm i
 ```
+
+- `npm run dev` starts a local development server with hot reloading
+- `npm run build` builds a production optimized file in dist/elm.min.js with a sourcemap
+- `npm run test:verify` runs the Elm doc/examples tests
+- `npm run test` and `npm run test:watch` runs unit tests, with the latter running in watch mode
+
+### Environment Variables
+
+Docs coming...
+
+- `.env` / `.env.development`
+- `index.unprocessed.html`
+
+### 🚧 I18n Support
+
+Docs coming...
+
+- `Core.I18n`
+- `index.unprocessed.html`
+
+### 🚧 GraphQL
+
+WIP
+
+### 🚧 Material-UI
+
+WIP
 
 ### Unit Tests
 We use [elm-test](https://github.com/elm-community/elm-test) to run our unit tests, in the `tests/` folder.
 
-Run `elm-test` to run the tests-
+Run `npx elm-test` to run the tests-
 
 ### Verified Examples in Documentation
 We use [elm-verify-examples](https://github.com/stoeffel/elm-verify-examples) to ensure that code in documentation is kept up-to-date. This is similar to tools liek doc-tests in other languages.
@@ -22,7 +49,7 @@ A brief example, that'll be validated.
 1+1 --> 2
 ```
 
-Running `elm-verify-examples --run-tests` will both generate and validate these docs. Make sure you have added the fils to check in `tests/elm-verify-examples.json`.
+Running `npm run test:verify` (or `npx elm-verify-examples --run-tests`) will both generate and validate these docs. Make sure you have added the fils to check in `tests/elm-verify-examples.json`.
 
 ### CI
 We use Github actions to build the project, run tests, and run doc tests in the CI pipeline. Check out the workflows in `.github/workflows/` to see the specific workflows that are set up.

@@ -12,6 +12,7 @@ import Html.Attributes exposing (..)
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Layout as Layout
+import Page.Error as Error
 import Page.Home as Home
 import Page.Item as Item
 import Page.NotFound as NotFound
@@ -101,7 +102,7 @@ init flags url navKey =
                     c
 
                 Err err ->
-                    Config.failedConfig (Debug.log "Failed decoding:" (Decode.errorToString err))
+                    Config.failedConfig (Decode.errorToString err)
 
         route =
             UrlParser.parse Route.parser url
@@ -158,26 +159,42 @@ view.
 view : Model -> Document Msg
 view model =
     let
+        -- Helper function for converting the page specific view,
+        -- into our application document.
         viewWith pageView toMsg subModel =
             let
                 { html, title } =
                     pageView model.t model.global subModel
             in
             mkDocument title (Html.map toMsg html)
+
+        -- Select the correct view, based on what model is active.
+        viewDocument =
+            case model.pageModel of
+                NotFound ->
+                    let
+                        { html, title } =
+                            NotFound.view model.t model.global
+                    in
+                    mkDocument title html
+
+                Home subModel ->
+                    viewWith Home.view HomeMsg subModel
+
+                Item subModel ->
+                    viewWith Item.view ItemMsg subModel
     in
-    case model.pageModel of
-        NotFound ->
+    -- Handle the configuration failing to load.
+    case model.config.loadState of
+        Config.FailedToDecode err ->
             let
                 { html, title } =
-                    NotFound.view model.t model.global
+                    Error.view model.t model.global err
             in
             mkDocument title html
 
-        Home subModel ->
-            viewWith Home.view HomeMsg subModel
-
-        Item subModel ->
-            viewWith Item.view ItemMsg subModel
+        Config.ConfigLoaded ->
+            viewDocument
 
 
 {-| Construc the HTML document for the Elm application.
