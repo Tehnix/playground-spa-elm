@@ -1,5 +1,6 @@
 module Page.Home exposing (Model, Msg, init, update, view)
 
+import Core.I18n exposing (Translate)
 import Global as Global
 import Helper.Bool exposing (bool, when)
 import Html exposing (..)
@@ -23,17 +24,17 @@ init =
     { text = "", showReversed = False }
 
 
-view : Global.Model -> Model -> { title : String, html : Html Msg }
-view _ model =
+view : Translate -> Global.Model -> Model -> { title : String, html : Html Msg }
+view t _ model =
     let
         content =
             div []
-                [ input [ placeholder "Text to reverse", value model.text, onInput ChangeInput ] []
+                [ input [ placeholder (t { k = "shared.textToReverse", default = "Text to reverse" }), value model.text, onInput ChangeInput ] []
                 , div [] [ text (when model.showReversed String.reverse model.text) ]
-                , button [ onClick ReverseText ] [ text "Reverse Text" ]
+                , button [ onClick ReverseText ] [ text (t { k = "shared.reverseText", default = "Reverse Text" }) ]
                 ]
     in
-    { title = "Item", html = content }
+    { title = t { k = "title.item", default = "Item" }, html = content }
 
 
 update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )

@@ -27,6 +27,7 @@ type alias Model =
     { navKey : Nav.Key
     , route : Maybe Route
     , config : Config
+    , t : I18n.TranslationKey -> String
     , global : Global.Model
     , pageModel : PageModel
     }
@@ -109,6 +110,7 @@ init flags url navKey =
             { navKey = navKey
             , route = route
             , config = config
+            , t = I18n.t config.i18n.translations
             , global = Global.init
             , pageModel = routeToPage Nothing Nothing route
             }
@@ -159,7 +161,7 @@ view model =
         viewWith pageView toMsg subModel =
             let
                 { html, title } =
-                    pageView model.global subModel
+                    pageView model.t model.global subModel
             in
             mkDocument title (Html.map toMsg html)
     in
@@ -167,7 +169,7 @@ view model =
         NotFound ->
             let
                 { html, title } =
-                    NotFound.view model.global
+                    NotFound.view model.t model.global
             in
             mkDocument title html
 

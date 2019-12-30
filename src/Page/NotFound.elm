@@ -1,16 +1,20 @@
 module Page.NotFound exposing (view)
 
+import Core.I18n exposing (Translate)
 import Global as Global
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
 
-view : Global.Model -> { title : String, html : Html msg }
-view _ =
+view : Translate -> Global.Model -> { title : String, html : Html msg }
+view t _ =
     let
+        notFoundText =
+            t { k = "title.notFound", default = "Not found" }
+
         content =
             div []
-                [ text "Not found"
+                [ text notFoundText
                 ]
     in
-    { title = "Not Found", html = content }
+    { title = notFoundText, html = content }

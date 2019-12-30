@@ -1,5 +1,6 @@
 module Page.Item exposing (Model, Msg, init, update, view)
 
+import Core.I18n exposing (Translate)
 import Core.Route as Route
 import Global as Global
 import Html exposing (..)
@@ -29,8 +30,8 @@ init _ =
     { counter = 0, color = Green }
 
 
-view : Global.Model -> Model -> { title : String, html : Html Msg }
-view _ model =
+view : Translate -> Global.Model -> Model -> { title : String, html : Html Msg }
+view t _ model =
     let
         color =
             case model.color of
@@ -48,7 +49,7 @@ view _ model =
                 , button [ onClick ToggleColor, color ] [ text "Toggle Color" ]
                 ]
     in
-    { title = "Item", html = content }
+    { title = t { k = "title.item", default = "Item" }, html = content }
 
 
 update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )

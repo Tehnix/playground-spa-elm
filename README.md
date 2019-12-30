@@ -33,6 +33,7 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Elm Cheat Sheet](https://github.com/izdi/elm-cheat-sheet)
 - [Real World Elm SPA Example](https://github.com/rtfeldman/elm-spa-example)
 - [5 Common JSON Decoders](https://thoughtbot.com/blog/5-common-json-decoders)
+- [Beginning JSON Decoding](https://elmprogramming.com/decoding-json-part-2.html)
 
 **Testing:**
 
@@ -47,3 +48,5 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Browser Navigation](https://package.elm-lang.org/packages/elm/browser/1.0.0/Browser-Navigation)
 - [Tasks](https://package.elm-lang.org/packages/elm/core/1.0.4/Task)
 - [Debug](https://package.elm-lang.org/packages/elm-lang/core/3.0.0/Debug)
+- [Json Decode](https://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode) / [Decode Pipeline](https://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest/)
+- [I18next](https://package.elm-lang.org/packages/ChristophP/elm-i18next/latest/I18Next)
