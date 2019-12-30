@@ -32,6 +32,7 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Intro to Elm](https://guide.elm-lang.org)
 - [Elm Cheat Sheet](https://github.com/izdi/elm-cheat-sheet)
 - [Real World Elm SPA Example](https://github.com/rtfeldman/elm-spa-example)
+- [5 Common JSON Decoders](https://thoughtbot.com/blog/5-common-json-decoders)
 
 **Testing:**
 

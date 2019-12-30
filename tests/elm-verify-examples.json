@@ -2,7 +2,7 @@
   "root": "../src",
   "tests": [
     "./README.md",
-    "Route",
+    "Core.Route",
     "Helper.Bool",
     "Helper.Maybe"
   ]

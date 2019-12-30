@@ -1,10 +1,10 @@
 module Page.Item exposing (Model, Msg, init, update, view)
 
-import Global
+import Core.Route as Route
+import Global as Global
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
-import Route
 
 
 type alias Model =

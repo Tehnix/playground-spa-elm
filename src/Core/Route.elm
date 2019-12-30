@@ -1,4 +1,4 @@
-module Route exposing (ItemParameters, Route(..), parser, toUrl)
+module Core.Route exposing (ItemParameters, Route(..), parser, toUrl)
 
 import Helper.Maybe exposing (maybe)
 import Url.Builder as UrlBuilder

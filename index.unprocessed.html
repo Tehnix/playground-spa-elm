@@ -17,7 +17,7 @@
         const cookie = document.cookie.match(
           "(^|[^;]+)\\s*" + name + "\\s*=\\s*([^;]+)"
         );
-        return cookie ? cookie.pop() : "";
+        return cookie ? cookie.pop() : null;
       }
       /**
        * Try to get the browser language, falling back to English.
@@ -64,7 +64,7 @@
             supportedLanguages,
             translations: fakeTranslations
           });
-        }, 2000);
+        }, 500);
       });
 
       const accessToken = getCookieValue("accessToken");

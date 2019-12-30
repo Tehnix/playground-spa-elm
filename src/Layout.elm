@@ -1,8 +1,8 @@
 module Layout exposing (body, menu)
 
+import Core.Route as Route
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Route
 
 
 body : Html msg -> List (Html msg)

@@ -2,15 +2,19 @@ module Main exposing (main)
 
 import Browser exposing (Document, UrlRequest)
 import Browser.Navigation as Nav
-import Global
+import Core.Config as Config exposing (Config)
+import Core.I18n as I18n
+import Core.Route as Route exposing (Route)
+import Global as Global
 import Helper.Maybe exposing (maybe)
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Json.Decode as Decode
+import Json.Encode as Encode
 import Layout as Layout
 import Page.Home as Home
 import Page.Item as Item
 import Page.NotFound as NotFound
-import Route as Route exposing (Route)
 import Url exposing (Url)
 import Url.Parser as UrlParser
 
@@ -22,6 +26,7 @@ that the user is presented with.
 type alias Model =
     { navKey : Nav.Key
     , route : Maybe Route
+    , config : Config
     , global : Global.Model
     , pageModel : PageModel
     }
@@ -70,7 +75,7 @@ of our functions that control the application:
   - `onUrlChange` handles URL changes, with the result going to `update`
 
 -}
-main : Program () Model Msg
+main : Program Encode.Value Model Msg
 main =
     Browser.application
         { init = init
@@ -86,15 +91,24 @@ main =
 then decide where to route the user, along with setting up other things for our
 initial model.
 -}
-init : () -> Url -> Nav.Key -> ( Model, Cmd Msg )
-init _ url navKey =
+init : Encode.Value -> Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url navKey =
     let
+        config =
+            case Decode.decodeValue Config.decoder flags of
+                Ok c ->
+                    c
+
+                Err err ->
+                    Config.failedConfig (Debug.log "Failed decoding:" (Decode.errorToString err))
+
         route =
             UrlParser.parse Route.parser url
 
         initialModel =
             { navKey = navKey
             , route = route
+            , config = config
             , global = Global.init
             , pageModel = routeToPage Nothing Nothing route
             }

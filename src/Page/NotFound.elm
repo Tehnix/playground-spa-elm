@@ -1,6 +1,6 @@
 module Page.NotFound exposing (view)
 
-import Global
+import Global as Global
 import Html exposing (..)
 import Html.Attributes exposing (..)
 
