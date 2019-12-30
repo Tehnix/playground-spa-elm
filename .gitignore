@@ -5,3 +5,4 @@ dist
 repl-temp-*
 node_modules
 .DS_Store
+.env

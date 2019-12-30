@@ -68,8 +68,8 @@
       });
 
       const accessToken = getCookieValue("accessToken");
-      const apiUrl = "https://api.github.com/graphql"; // "https://api.github.com/graphql"
-      const stage = "development"; // "development"
+      const apiUrl = process.env.API_URL; // "https://api.github.com/graphql"
+      const stage = process.env.STAGE; // "development"
 
       /**
        * Start the Elm app when translations have downloaded.

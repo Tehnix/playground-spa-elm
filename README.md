@@ -30,7 +30,7 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 ### Resources
 
 - [Intro to Elm](https://guide.elm-lang.org)
-- [Scaling Views with Master View Types](https://discourse.elm-lang.org/t/scaling-views-with-master-view-types/4014)
+- [Elm Cheat Sheet](https://github.com/izdi/elm-cheat-sheet)
 - [Real World Elm SPA Example](https://github.com/rtfeldman/elm-spa-example)
 
 **Testing:**
