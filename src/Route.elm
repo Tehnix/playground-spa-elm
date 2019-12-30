@@ -1,5 +1,6 @@
-module Route exposing (ItemParameters, Route(..), parser, title, toUrl)
+module Route exposing (ItemParameters, Route(..), parser, toUrl)
 
+import Helper.Maybe exposing (maybe)
 import Url.Builder as UrlBuilder
 import Url.Parser as UrlParser exposing ((<?>), oneOf, s)
 import Url.Parser.Query as Query
@@ -8,7 +9,8 @@ import Url.Parser.Query as Query
 {-| Our @Route@ data type defines all the routes of our application,
 and sets up what data is relevant for each route to contain.
 
-Adding a new route involves a couple of steps:
+When adding a new route, you will want to go through the following
+steps:
 
 1.  Adding handling in the `parser`
 2.  Expand `title` with a case for the new route
@@ -40,39 +42,15 @@ E.g.
 Consult <https://package.elm-lang.org/packages/elm/url/latest/Url-Parser> for
 more in-depth information.
 
+When adding a new route, you will want to specify how to add its parsing here.
+
 -}
 parser : UrlParser.Parser (Route -> a) a
 parser =
     oneOf
         [ UrlParser.map Home UrlParser.top
-        , UrlParser.map mkItem (s "item" <?> Query.string "from" <?> Query.string "to")
+        , UrlParser.map (\from to -> Item (Just { from = from, to = to })) (s "item" <?> Query.string "from" <?> Query.string "to")
         ]
-
-
-mkItem : Maybe String -> Maybe String -> Route
-mkItem from to =
-    Item (Just { from = from, to = to })
-
-
-{-| Construct a title from our @Route@ object.
-
-E.g.
-
-    title (Just Home)
-    --> "Home"
-
--}
-title : Maybe Route -> String
-title route =
-    case route of
-        Just Home ->
-            "Home"
-
-        Just (Item _) ->
-            "Item"
-
-        Nothing ->
-            "Invalid route"
 
 
 {-| Construct a title from our @Route@ object, and return an absolute
@@ -82,6 +60,9 @@ E.g.
 
     toUrl <| Item (Just { from = Just "test", to = Nothing })
     --> "/item?from=test"
+
+When adding a new route, you will want to specify how to convert it to
+an URL string.
 
 -}
 toUrl : Route -> String
@@ -105,13 +86,5 @@ toUrl route =
             UrlBuilder.absolute [] []
 
         Item params ->
-            let
-                query =
-                    case params of
-                        Just p ->
-                            filterQuery [ ( "from", p.from ), ( "to", p.to ) ]
-
-                        Nothing ->
-                            []
-            in
-            UrlBuilder.absolute [ "item" ] query
+            UrlBuilder.absolute [ "item" ] <|
+                maybe [] (\p -> filterQuery [ ( "from", p.from ), ( "to", p.to ) ]) params

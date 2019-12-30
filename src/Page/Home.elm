@@ -23,13 +23,17 @@ init =
     { text = "", showReversed = False }
 
 
-view : Global.Model -> Model -> Html Msg
+view : Global.Model -> Model -> { title : String, html : Html Msg }
 view _ model =
-    div []
-        [ input [ placeholder "Text to reverse", value model.text, onInput ChangeInput ] []
-        , div [] [ text (when model.showReversed String.reverse model.text) ]
-        , button [ onClick ReverseText ] [ text "Reverse Text" ]
-        ]
+    let
+        content =
+            div []
+                [ input [ placeholder "Text to reverse", value model.text, onInput ChangeInput ] []
+                , div [] [ text (when model.showReversed String.reverse model.text) ]
+                , button [ onClick ReverseText ] [ text "Reverse Text" ]
+                ]
+    in
+    { title = "Item", html = content }
 
 
 update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )

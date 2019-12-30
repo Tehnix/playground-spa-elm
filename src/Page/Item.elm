@@ -29,7 +29,7 @@ init _ =
     { counter = 0, color = Green }
 
 
-view : Global.Model -> Model -> Html Msg
+view : Global.Model -> Model -> { title : String, html : Html Msg }
 view _ model =
     let
         color =
@@ -39,13 +39,16 @@ view _ model =
 
                 Red ->
                     style "color" "red"
+
+        content =
+            div []
+                [ button [ onClick Decrement ] [ text "-" ]
+                , div [] [ text (String.fromInt model.counter) ]
+                , button [ onClick Increment ] [ text "+" ]
+                , button [ onClick ToggleColor, color ] [ text "Toggle Color" ]
+                ]
     in
-    div []
-        [ button [ onClick Decrement ] [ text "-" ]
-        , div [] [ text (String.fromInt model.counter) ]
-        , button [ onClick Increment ] [ text "+" ]
-        , button [ onClick ToggleColor, color ] [ text "Toggle Color" ]
-        ]
+    { title = "Item", html = content }
 
 
 update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )

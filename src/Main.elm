@@ -3,11 +3,13 @@ module Main exposing (main)
 import Browser exposing (Document, UrlRequest)
 import Browser.Navigation as Nav
 import Global
+import Helper.Maybe exposing (maybe)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Layout as Layout
 import Page.Home as Home
 import Page.Item as Item
+import Page.NotFound as NotFound
 import Route as Route exposing (Route)
 import Url exposing (Url)
 import Url.Parser as UrlParser
@@ -28,14 +30,22 @@ type alias Model =
 {-| The `PageModel` is a union type of all pages. This allows us to
 pattern match directly in our `view` function, to decide which page
 we should display. Alternatively we would have to dig into the route.
+
+When adding a new page, you will want to update this with the page
+model.
+
 -}
 type PageModel
-    = Home Home.Model
+    = NotFound
+    | Home Home.Model
     | Item Item.Model
 
 
 {-| The `Msg` type is what defines the possible actions in our application,
 and is what `update` acts on.
+
+When adding a new page, you will want to update this with the page msg.
+
 -}
 type
     Msg
@@ -58,8 +68,6 @@ of our functions that control the application:
   - `onUrlRequest` is where all links go through (e.g. clicking on an `a`),
     with the result going to `update`
   - `onUrlChange` handles URL changes, with the result going to `update`
-
-Read more about how `Browser.application` works in the documentation <https://package.elm-lang.org/packages/elm/browser/latest/Browser#application>, and potentially also `Browser.Navigation` <https://package.elm-lang.org/packages/elm/browser/1.0.0/Browser-Navigation>.
 
 -}
 main : Program () Model Msg
@@ -84,27 +92,41 @@ init _ url navKey =
         route =
             UrlParser.parse Route.parser url
 
-        initialPage =
-            case route of
-                Nothing ->
-                    Home Home.init
-
-                Just page ->
-                    case page of
-                        Route.Home ->
-                            Home Home.init
-
-                        Route.Item params ->
-                            Item (Item.init params)
-
         initialModel =
             { navKey = navKey
             , route = route
             , global = Global.init
-            , pageModel = initialPage
+            , pageModel = routeToPage Nothing Nothing route
             }
     in
     ( initialModel, Cmd.none )
+
+
+{-| Figure out what page model we need to use, depending on the `Route`
+that we are on. If the route is going to the same page, we make sure to
+keep the page model we already have, instead of reinitialising it.
+
+When adding a new page, you will want to update this with the new route
+to the page.
+
+-}
+routeToPage : Maybe Model -> Maybe Route -> Maybe Route -> PageModel
+routeToPage maybeModel previousRoute nextRoute =
+    case ( previousRoute, nextRoute ) of
+        ( _, Nothing ) ->
+            NotFound
+
+        ( Just Route.Home, Just Route.Home ) ->
+            maybe (Home Home.init) .pageModel maybeModel
+
+        ( _, Just Route.Home ) ->
+            Home Home.init
+
+        ( Just (Route.Item _), Just (Route.Item params) ) ->
+            maybe (Item (Item.init params)) .pageModel maybeModel
+
+        ( _, Just (Route.Item params) ) ->
+            Item (Item.init params)
 
 
 {-| The `view` function generates the entirety of our application from the
@@ -113,30 +135,51 @@ init _ url navKey =
 The top function here also controls the title of the page, and then delegates
 the specific view depending on the current route in the model.
 
+When adding a new page, you will want to update this with the new page
+view.
+
 -}
 view : Model -> Document Msg
 view model =
     let
-        title =
-            Route.title model.route
-
         viewWith pageView toMsg subModel =
-            pageView model.global subModel |> Html.map toMsg
-
-        contents =
-            case model.pageModel of
-                Home subModel ->
-                    viewWith Home.view HomeMsg subModel
-
-                Item subModel ->
-                    viewWith Item.view ItemMsg subModel
+            let
+                { html, title } =
+                    pageView model.global subModel
+            in
+            mkDocument title (Html.map toMsg html)
     in
+    case model.pageModel of
+        NotFound ->
+            let
+                { html, title } =
+                    NotFound.view model.global
+            in
+            mkDocument title html
+
+        Home subModel ->
+            viewWith Home.view HomeMsg subModel
+
+        Item subModel ->
+            viewWith Item.view ItemMsg subModel
+
+
+{-| Construc the HTML document for the Elm application.
+-}
+mkDocument : String -> Html msg -> Document msg
+mkDocument title contents =
     { title = title
-    , body =
-        [ Layout.menu
-        , contents
-        ]
+    , body = Layout.body contents
     }
+
+
+{-| All externally updated events go through the subscription handler, meaning
+each of the events will be handled in a case here. This can be things like a
+timer that ticks every second, or similar.
+-}
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.none
 
 
 {-| All our events go through here, both user initiated and events such as URL
@@ -145,6 +188,9 @@ changes or link clicking.
 In the `update` function we have the oppurtunity to update the model and/or
 trigger a subsequent command, as reflected in the return type of our
 function, `( Model, Cmd Msg )`.
+
+When adding a new page, you will want to update this with the update handler
+for the new page.
 
 -}
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -173,7 +219,7 @@ update msg model =
                 route =
                     UrlParser.parse Route.parser url
             in
-            ( { model | route = route, pageModel = changePage model route }, Cmd.none )
+            ( { model | route = route, pageModel = routeToPage (Just model) model.route route }, Cmd.none )
 
         -- The `LinkClicked` event happens _before_ the URL is changed.
         ( LinkClicked urlRequest, _ ) ->
@@ -189,44 +235,20 @@ update msg model =
 
         --------------- Handle events for each page. ---------------
         -- NOTE: We almost always discard messages, if they are from a page that is
-        -- not active. The reason we catch it in each individual Msg pattern match,
-        -- instead of a global catch-all, is to retain our exhaustiveness check, making
-        -- sure we are handling all message types.
-        ( ItemMsg subMsg, pageModel ) ->
-            case pageModel of
-                Item subModel ->
-                    Item.update model.global subMsg subModel
-                        |> updateWith model Item ItemMsg
+        -- not active.
+        ( ItemMsg subMsg, Item subModel ) ->
+            Item.update model.global subMsg subModel
+                |> updateWith model Item ItemMsg
 
-                -- Do nothing if we get a message not from the current page.
-                _ ->
-                    ( model, Cmd.none )
+        ( ItemMsg _, _ ) ->
+            ( model, Cmd.none )
 
-        ( HomeMsg subMsg, pageModel ) ->
-            case pageModel of
-                Home subModel ->
-                    Home.update model.global subMsg subModel
-                        |> updateWith model Home HomeMsg
+        ( HomeMsg subMsg, Home subModel ) ->
+            Home.update model.global subMsg subModel
+                |> updateWith model Home HomeMsg
 
-                -- Do nothing if we get a message not from the current page.
-                _ ->
-                    ( model, Cmd.none )
-
-
-{-| Figure out what page model we need to use, depending on the `Route`
-that we are on.
--}
-changePage : Model -> Maybe Route -> PageModel
-changePage model route =
-    case route of
-        Just Route.Home ->
-            Home Home.init
-
-        Just (Route.Item params) ->
-            Item (Item.init params)
-
-        Nothing ->
-            model.pageModel
+        ( HomeMsg _, _ ) ->
+            ( model, Cmd.none )
 
 
 {-| Helper function for restructuring a sub-model, sub-msg and global msg into
@@ -250,12 +272,3 @@ updateWith model toPageModel toMsg ( subModel, subMsg, globalMsg ) =
             Cmd.batch [ Cmd.map toMsg subMsg, Cmd.map GlobalMsg globalMsg ]
     in
     ( newModel, batchedMsg )
-
-
-{-| All externally updated events go through the subscription handler, meaning
-each of the events will be handled in a case here. This can be things like a
-timer that ticks every second, or similar.
--}
-subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Sub.none
