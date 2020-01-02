@@ -13,7 +13,7 @@
     "test:watch": "elm-test --watch",
     "test:verify": "elm-verify-examples --run-tests",
     "dev": "STAGE=development npm run --silent build:pre-process && npm run build:elm:compile:dev && npm run dev:elm:live",
-    "dev:elm:live": "elm-live src/Main.elm --start-page=index.html --hot --open --pushstate --port=1234 -- --output=dist/elm.js --debug",
+    "dev:elm:live": "elm-live src/Main.elm --start-page=dist/index.html --hot --open --pushstate --port=1234 -- --output=dist/elm.js --debug",
     "build": "npm run build:pre-process && npm run build:elm:compile && npm run build:minify",
     "build:minify": "uglifyjs dist/elm.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters=true,keep_fargs=false,unsafe_comps=true,unsafe=true,passes=2' --mangle --output=dist/elm.min.js --source-map url=elm.min.js.map",
     "build:elm:compile": "elm make src/Main.elm --output=dist/elm.js --optimize",

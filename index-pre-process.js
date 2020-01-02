@@ -4,14 +4,23 @@
  *
  * All variables are read from
  */
+const fs = require("fs");
+
 const { STAGE } = process.env;
+
+// We always use .env.development, unless the stage is production or staging.
 let dotenvPath = "./.env.development";
 if (STAGE === "production" || STAGE === "staging") {
   dotenvPath = "./.env";
 }
 require("dotenv").config({ path: dotenvPath });
-const fs = require("fs");
 
+/**
+ * These are your replacements that are set up in index.unprocessed.html, and will
+ * get their values from here. Note that currently it's assumed that all these will
+ * be valid when thrown into quotes, e.g. "development" is generated from the value
+ * development.
+ */
 const REPLACEMENTS = [
   { target: "process.env.API_URL", value: process.env.API_URL },
   { target: "process.env.STAGE", value: process.env.STAGE }
@@ -37,10 +46,10 @@ const processIndex = () => {
 };
 
 /**
- * Write the index file to disk at `index.html`.
+ * Write the index file to disk at `dist/index.html`.
  */
 const writeIndex = index => {
-  fs.writeFileSync("./index.html", index);
+  fs.writeFileSync("./dist/index.html", index);
 };
 
 /**
@@ -50,11 +59,15 @@ const writeIndex = index => {
 const validateIndex = index => {
   const lines = index.split("\n");
   const invalidLines = [];
+  // Gather all invalid lines.
   lines.map((line, i) => {
     if (line.indexOf("process.env") !== -1) {
       invalidLines.push({ line, lineNo: i });
     }
   });
+
+  // Neatly report to the user which lines were invalid, with their line number
+  // and contents.
   if (invalidLines.length !== 0) {
     console.error("");
     console.error("✋ There are still unprocessed `process.env`s left!");
