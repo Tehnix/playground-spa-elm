@@ -1,4 +1,4 @@
-# Elm SPA Playground
+# Elm SPA Playground ![](https://github.com/Tehnix/playground-elm-spa/workflows/CI/badge.svg)
 Playing around with Elm SPAs and structuring them for larger scale applications.
 
 
