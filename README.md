@@ -1,6 +1,7 @@
 # Elm SPA Playground
 Playing around with Elm SPAs and structuring them for larger scale applications.
 
+
 #### Getting Started
 Everything is set up in package.json, meaning you just have to run,
 
@@ -12,6 +13,16 @@ $ npm i
 - `npm run build` builds a production optimized file in dist/elm.min.js with a sourcemap
 - `npm run test:verify` runs the Elm doc/examples tests
 - `npm run test` and `npm run test:watch` runs unit tests, with the latter running in watch mode
+
+#### Structure
+
+A brief overview of the structure inside the `src/` folder:
+
+- `Page` is where individual pages live
+- `Layout` is where the document/page layout is controlled
+- `Application` is where we stitch together all the page views, updates and routes
+- `Helper` are for convenient helper functions
+- `Core` should usually not be changed, and is responsible for stitching together everything behind the scenes
 
 ### Environment Variables
 
@@ -60,13 +71,13 @@ We'll need a project id though, which we'll pass to Elm via init flags, along wi
 - `I18N_URL` pointing to your endpoint for translations (e.g. `https://api.locize.io` or `/assets` for development)
 - `I18N_PROJECT` with the locize project id (we use `i18n` for development, so that the path fits)
 
-### 🚧 GraphQL
+### GraphQL
 
-WIP
+🚧 WIP 🚧
 
-### 🚧 Material-UI
+### Material-UI
 
-WIP
+🚧 WIP 🚧
 
 ### Unit Tests
 We use [elm-test](https://github.com/elm-community/elm-test) to run our unit tests, in the `tests/` folder.
@@ -98,6 +109,7 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 **Tools:**
 
 - [Handy JSON Decoder Generator](https://noredink.github.io/json-to-elm/) (fine for the initial decoding)
+- [Managing elm.json](https://github.com/zwilias/elm-json)
 
 **Testing:**
 
