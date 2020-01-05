@@ -1,11 +1,12 @@
 module Main exposing (main)
 
-import Application.Core.Init exposing (init)
-import Application.Core.Subscriptions exposing (subscriptions)
-import Application.Core.Types exposing (Application(..), Msg(..), PageModel(..), PageMsg(..))
-import Application.Core.Update exposing (update)
-import Application.Core.View exposing (view)
+import Application.Page.Types exposing (PageModel(..), PageMsg(..))
 import Browser
+import Core.Init exposing (init)
+import Core.Subscriptions exposing (subscriptions)
+import Core.Types exposing (Application(..), Msg(..))
+import Core.Update exposing (update)
+import Core.View exposing (view)
 import Json.Encode as Encode
 
 

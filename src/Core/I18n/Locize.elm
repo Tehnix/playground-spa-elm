@@ -1,8 +1,8 @@
-module Application.I18n.Locize exposing (fetchLanguage, fetchSupportedLanguages, initializeLocize)
+module Core.I18n.Locize exposing (fetchLanguage, fetchSupportedLanguages, initializeLocize)
 
-import Application.I18n exposing (decodeSupportedLanguages)
-import Application.I18n.Types exposing (I18n, Language(..), Namespace(..), Version(..))
 import Application.Types exposing (GlobalMsg(..))
+import Core.I18n exposing (decodeSupportedLanguages)
+import Core.I18n.Types exposing (I18n, Language(..), Namespace(..), Version(..))
 import Helper.Bool exposing (bool)
 import Http
 import I18Next exposing (translationsDecoder)

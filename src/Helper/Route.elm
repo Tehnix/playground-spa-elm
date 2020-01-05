@@ -1,6 +1,6 @@
 module Helper.Route exposing (toUrl)
 
-import Application.Route exposing (Route(..))
+import Application.Types exposing (Route(..))
 import Helper.Maybe exposing (maybe)
 import Url.Builder as UrlBuilder
 
@@ -10,7 +10,7 @@ to be used in as the href for a link.
 
 E.g.
 
-    import Application.Route exposing (Route(..))
+    import Application.Types exposing (Route(..))
     toUrl <| Item (Just { from = Just "test", to = Nothing })
     --> "/item?from=test"
 

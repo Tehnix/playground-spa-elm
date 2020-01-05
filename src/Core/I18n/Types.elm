@@ -1,4 +1,4 @@
-module Application.I18n.Types exposing (I18n, Language(..), Namespace(..), SupportedLanguage, Translate, TranslationKey, Version(..))
+module Core.I18n.Types exposing (I18n, Language(..), Namespace(..), SupportedLanguage, Translate, TranslationKey, Version(..))
 
 import Dict exposing (Dict)
 import I18Next exposing (Translations)

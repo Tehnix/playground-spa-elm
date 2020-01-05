@@ -1,9 +1,9 @@
-module Application.I18n exposing (decodeSupportedLanguages, decoder, initI18n, langToString, t, t_)
+module Core.I18n exposing (decodeSupportedLanguages, decoder, initI18n, langToString, t, t_)
 
-import Application.I18n.Types exposing (I18n, Language(..), Namespace(..), SupportedLanguage, Translate, Version(..))
+import Core.I18n.Types exposing (I18n, Language(..), Namespace(..), SupportedLanguage, Translate, Version(..))
 import Dict as Dict exposing (Dict)
 import I18Next exposing (Translations, initialTranslations, translationsDecoder)
-import Json.Decode as Decode exposing (Decoder, bool, list, string)
+import Json.Decode as Decode exposing (Decoder, bool, string)
 import Json.Decode.Pipeline exposing (required)
 
 
@@ -136,7 +136,7 @@ E.g.
     import I18Next
     import Json.Decode as Decode
     import Dict as Dict exposing (Dict)
-    import Application.I18n exposing (t_)
+    import Core.I18n exposing (t_)
 
     fakeFrTranslations : I18Next.Translations
     fakeFrTranslations =

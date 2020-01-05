@@ -1,7 +1,7 @@
 module Application.Config exposing (AccessToken, Config, Stage, decoder)
 
-import Application.I18n as I18n
-import Application.I18n.Types exposing (I18n)
+import Core.I18n as I18n
+import Core.I18n.Types exposing (I18n)
 import Json.Decode as Decode exposing (Decoder, nullable, string)
 import Json.Decode.Pipeline exposing (required)
 

@@ -29,12 +29,12 @@ view t _ model =
     let
         content =
             div []
-                [ input [ placeholder (t { k = "shared.textToReverse", default = "Text to reverse" }), value model.text, onInput ChangeInput ] []
+                [ input [ placeholder (t { k = "sharedTextToReverse", default = "Text to reverse" }), value model.text, onInput ChangeInput ] []
                 , div [] [ text (when model.showReversed String.reverse model.text) ]
-                , button [ onClick ReverseText ] [ text (t { k = "shared.reverseText", default = "Reverse Text" }) ]
+                , button [ onClick ReverseText ] [ text (t { k = "sharedReverseText", default = "Reverse Text" }) ]
                 ]
     in
-    { title = t { k = "title.item", default = "Item" }, html = content }
+    { title = t { k = "titleItem", default = "Item" }, html = content }
 
 
 update : GlobalModel -> Msg -> Model -> ( Model, Cmd Msg, Cmd GlobalMsg )

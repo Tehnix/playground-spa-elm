@@ -1,7 +1,7 @@
 module Page.Error exposing (view)
 
-import Application.I18n.Types exposing (Translate)
 import Application.Types exposing (GlobalModel)
+import Core.I18n.Types exposing (Translate)
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 
@@ -10,7 +10,7 @@ view : Translate -> GlobalModel -> String -> { title : String, html : Html msg }
 view t _ error =
     let
         errorText =
-            t { k = "title.anErrorOccurred", default = "An error occurred" }
+            t { k = "titleAnErrorOccurred", default = "An error occurred" }
 
         content =
             div []

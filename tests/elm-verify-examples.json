@@ -2,8 +2,8 @@
   "root": "../src",
   "tests": [
     "./README.md",
-    "Application.Core.Route",
-    "Application.I18n",
+    "Application.Route",
+    "Core.I18n",
     "Helper.Bool",
     "Helper.Route",
     "Helper.Maybe"

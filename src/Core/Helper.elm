@@ -1,12 +1,11 @@
-module Application.Core.Helper exposing (mkDocument, updateWith, viewWith)
+module Core.Helper exposing (mkDocument, updateWith, viewWith)
 
-import Application.Core.Types exposing (Application(..), Model, Msg(..), PageModel(..), PageMsg(..))
-import Application.I18n.Types exposing (I18n)
-import Application.Types exposing (GlobalModel, GlobalMsg)
+import Application.Page.Types exposing (PageModel, PageMsg)
+import Application.Types exposing (GlobalMsg)
 import Browser exposing (Document)
+import Core.Types exposing (Application(..), Model, Msg(..))
 import Html.Styled as Html exposing (Html, toUnstyled)
-import Layout.Menu as Layout
-import Layout.Style
+import Layout.Types exposing (Layout)
 import Page.Types exposing (Page)
 
 
@@ -36,24 +35,19 @@ updateWith model toPageModel toMsg ( subModel, subMsg, globalMsg ) =
 {-| Helper function for converting the page specific view, into our application
 document.
 -}
-viewWith : Model -> Page subModel subMsg -> (subMsg -> PageMsg) -> subModel -> Document Msg
-viewWith model pageView toMsg subModel =
+viewWith : Layout -> Model -> Page subModel subMsg -> (subMsg -> PageMsg) -> subModel -> Document Msg
+viewWith layout model pageView toMsg subModel =
     let
         { html, title } =
             pageView model.t model.global subModel
     in
-    mkDocument model.config.i18n title (Html.map (PageMsg << toMsg) html)
+    mkDocument layout model title (Html.map (PageMsg << toMsg) html)
 
 
 {-| Construct the HTML document for the Elm application.
 -}
-mkDocument : I18n -> String -> Html Msg -> Document Msg
-mkDocument i18n title contents =
+mkDocument : Layout -> Model -> String -> Html Msg -> Document Msg
+mkDocument layout model title contents =
     { title = title
-    , body =
-        List.map toUnstyled
-            [ Layout.Style.global
-            , Html.map GlobalMsg (Layout.menu i18n)
-            , contents
-            ]
+    , body = List.map toUnstyled (layout model.t model.config.i18n contents)
     }

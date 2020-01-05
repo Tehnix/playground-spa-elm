@@ -1,11 +1,15 @@
-module Application.I18n.Hardcoded exposing (supportedLanguages, translations)
+module Core.I18n.Hardcoded exposing (supportedLanguages, translations)
 
 {-| Hardcoded translations are convenient, because you are not reliant on a
 external service to fetch translations and you can initialize the application
 much quicker.
+
+If this is to be taken in use, it's advised to move this from Core to Application,
+which is a more fitting destination for things that will be changed by the user.
+
 -}
 
-import Application.I18n.Types exposing (Language(..), SupportedLanguage)
+import Core.I18n.Types exposing (Language(..), SupportedLanguage)
 import Dict as Dict exposing (Dict)
 import I18Next exposing (Translations, initialTranslations)
 

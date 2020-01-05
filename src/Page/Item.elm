@@ -1,7 +1,6 @@
 module Page.Item exposing (Model, Msg, init, update, view)
 
-import Application.Route exposing (ItemParameters)
-import Application.Types exposing (GlobalModel, GlobalMsg)
+import Application.Types exposing (GlobalModel, GlobalMsg, ItemParameters)
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (onClick)
@@ -49,7 +48,7 @@ view t _ model =
                 , button [ onClick ToggleColor, color ] [ text "Toggle Color" ]
                 ]
     in
-    { title = t { k = "title.item", default = "Item" }, html = content }
+    { title = t { k = "titleItem", default = "Item" }, html = content }
 
 
 update : GlobalModel -> Msg -> Model -> ( Model, Cmd Msg, Cmd GlobalMsg )

@@ -1,8 +1,10 @@
 module Application.Page exposing (update, view)
 
-import Application.Core.Helper exposing (mkDocument, updateWith, viewWith)
-import Application.Core.Types exposing (Application(..), Model, Msg(..), PageModel(..), PageMsg(..))
+import Application.Page.Types exposing (PageModel(..), PageMsg(..))
 import Browser exposing (Document)
+import Core.Helper exposing (mkDocument, updateWith, viewWith)
+import Core.Types exposing (Application(..), Model, Msg(..))
+import Layout.Page
 import Page.Home as Home
 import Page.Item as Item
 import Page.NotFound as NotFound
@@ -47,10 +49,10 @@ view model =
                 { html, title } =
                     NotFound.view model.t model.global
             in
-            mkDocument model.config.i18n title html
+            mkDocument Layout.Page.body model title html
 
         Home subModel ->
-            viewWith model Home.view HomeMsg subModel
+            viewWith Layout.Page.body model Home.view HomeMsg subModel
 
         Item subModel ->
-            viewWith model Item.view ItemMsg subModel
+            viewWith Layout.Page.body model Item.view ItemMsg subModel

@@ -1,10 +1,11 @@
-module Application.Core.View exposing (view)
+module Core.View exposing (view)
 
-import Application.Core.Types exposing (Application(..), Msg(..), PageModel(..), PageMsg(..))
 import Application.Page as Page
+import Application.Page.Types exposing (PageModel(..), PageMsg(..))
 import Browser exposing (Document)
+import Core.Types exposing (Application(..), Msg(..))
 import Html.Styled exposing (toUnstyled)
-import Layout.Style
+import Layout.Theme
 import Page.Initialization.Failed as InitializationFailed
 import Page.Initialization.Loading as Initializating
 
@@ -30,7 +31,7 @@ view application =
                     InitializationFailed.view err
             in
             { title = title
-            , body = [ toUnstyled Layout.Style.global, toUnstyled html ]
+            , body = [ toUnstyled Layout.Theme.globalStyle, toUnstyled html ]
             }
 
         Ready model ->

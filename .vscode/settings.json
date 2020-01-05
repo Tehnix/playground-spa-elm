@@ -10,5 +10,13 @@
     "**/bower_components": true,
     "**/*.code-search": true,
     "tests/VerifyExamples/*": true
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "elm-stuff": true
   }
 }

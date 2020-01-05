@@ -1,13 +1,14 @@
-module Application.Core.Init exposing (init)
+module Core.Init exposing (init)
 
 import Application.Config as Config
-import Application.Core.Route as Route
-import Application.Core.Types exposing (Application(..), Msg(..), PageModel(..), PageMsg(..))
 import Application.Global as Global
-import Application.I18n as I18n
-import Application.I18n.Locize as I18n
-import Application.I18n.Types as I18n
+import Application.Page.Types exposing (PageModel(..), PageMsg(..))
+import Application.Route as Route
 import Browser.Navigation as Nav
+import Core.I18n as I18n
+import Core.I18n.Locize as I18n
+import Core.I18n.Types as I18n
+import Core.Types exposing (Application(..), Msg(..))
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Url exposing (Url)

@@ -1,14 +1,15 @@
-module Application.Core.Update exposing (update)
+module Core.Update exposing (update)
 
-import Application.Core.Route as Route exposing (toPageModel)
-import Application.Core.Types exposing (Application(..), Model, Msg(..), PageModel(..), PageMsg(..))
 import Application.Global as Global
-import Application.I18n as I18n
-import Application.I18n.Types as I18n
 import Application.Page as Page
-import Application.Route as Route
+import Application.Page.Types exposing (PageModel(..), PageMsg(..))
+import Application.Route as Route exposing (toPageModel)
+import Application.Types as Route
 import Browser
 import Browser.Navigation as Nav
+import Core.I18n as I18n
+import Core.I18n.Types as I18n
+import Core.Types exposing (Application(..), Model, Msg(..))
 import Url
 import Url.Parser as UrlParser
 
@@ -82,7 +83,7 @@ updateModel msg model =
             ( { model
                 | global = globalModel
                 , config = newConfig
-                , t = I18n.t model.config.i18n.selectedLanguage model.config.i18n.translations
+                , t = I18n.t newConfig.i18n.selectedLanguage newConfig.i18n.translations
               }
             , Cmd.map GlobalMsg globalMsg
             )

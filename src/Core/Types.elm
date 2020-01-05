@@ -1,42 +1,13 @@
-module Application.Core.Types exposing (Application(..), Model, Msg(..), PageModel(..), PageMsg(..))
+module Core.Types exposing (Application(..), Model, Msg(..))
 
 import Application.Config exposing (Config)
-import Application.I18n as I18n
-import Application.I18n.Types as I18n
-import Application.Route exposing (Route)
-import Application.Types exposing (GlobalModel, GlobalMsg)
+import Application.Page.Types exposing (PageModel, PageMsg)
+import Application.Types exposing (GlobalModel, GlobalMsg, Route)
 import Browser exposing (UrlRequest)
 import Browser.Navigation as Nav
-import Page.Home as Home
-import Page.Item as Item
+import Core.I18n as I18n
+import Core.I18n.Types as I18n
 import Url exposing (Url)
-
-
-{-| The `PageModel` is a union type of all pages. This allows us to
-pattern match directly in our `view` function, to decide which page
-we should display. Alternatively we would have to dig into the route.
-
-When adding a new page, you will want to update this with the page
-model.
-
--}
-type PageModel
-    = NotFound
-    | Home Home.Model
-    | Item Item.Model
-
-
-{-| The `PageMsg` is a union type of all pages. This allows us to
-group page updaes into the same case, and extract them from the
-core update handler.
-
-When adding a new page, you will want to update this with the page
-msg.
-
--}
-type PageMsg
-    = HomeMsg Home.Msg
-    | ItemMsg Item.Msg
 
 
 {-| The `Application` is where we track our application state, at

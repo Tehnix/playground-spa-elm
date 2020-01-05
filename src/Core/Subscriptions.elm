@@ -1,6 +1,6 @@
-module Application.Core.Subscriptions exposing (subscriptions)
+module Core.Subscriptions exposing (subscriptions)
 
-import Application.Core.Types exposing (Application(..), Model, Msg(..))
+import Core.Types exposing (Application(..), Model, Msg(..))
 
 
 {-| All externally updated events go through the subscription handler, meaning

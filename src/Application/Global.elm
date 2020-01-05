@@ -5,9 +5,9 @@ might need to access (via the model) or trigger events (via the msg),
 such as user information or logout events.
 -}
 
-import Application.I18n.Locize as I18n
-import Application.I18n.Types exposing (I18n, Language(..))
 import Application.Types exposing (GlobalModel, GlobalMsg(..), User(..))
+import Core.I18n.Locize as I18n
+import Core.I18n.Types exposing (I18n, Language(..))
 import Dict
 
 
