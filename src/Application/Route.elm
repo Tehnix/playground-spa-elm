@@ -56,7 +56,22 @@ toPageModel maybeModel previousRoute nextRoute =
             Home Home.init
 
         ( Just (Route.Item _), Just (Route.Item params) ) ->
-            maybe (Item (Item.init params)) .pageModel maybeModel
+            -- TODO: Find a more elegant way of achiving this.
+            let
+                -- Update the parameters, while retaining the model.
+                updateParams m =
+                    case m.pageModel of
+                        Item itemModel ->
+                            Item (setParams itemModel)
+
+                        _ ->
+                            m.pageModel
+
+                setParams : Item.Model -> Item.Model
+                setParams itemModel =
+                    { itemModel | params = params }
+            in
+            maybe (Item (Item.init params)) updateParams maybeModel
 
         ( _, Just (Route.Item params) ) ->
             Item (Item.init params)

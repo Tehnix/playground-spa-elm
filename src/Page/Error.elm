@@ -2,8 +2,8 @@ module Page.Error exposing (view)
 
 import Application.Types exposing (GlobalModel)
 import Core.I18n.Types exposing (Translate)
-import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
 
 
 view : Translate -> GlobalModel -> String -> { title : String, html : Html msg }

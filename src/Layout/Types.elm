@@ -3,7 +3,7 @@ module Layout.Types exposing (Layout)
 import Application.Types exposing (GlobalMsg(..))
 import Core.I18n.Types exposing (I18n, Language(..), Translate)
 import Core.Types exposing (Msg(..))
-import Html.Styled exposing (Html)
+import Html exposing (Html)
 
 
 type alias Layout =

@@ -1,5 +1,11 @@
 {
   "checks": {
     "ImportAll": false
+  },
+  "TriggerWords": {
+    "words": [
+      "fixme",
+      "nocommit"
+    ]
   }
 }

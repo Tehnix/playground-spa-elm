@@ -4,7 +4,7 @@ import Application.Page.Types exposing (PageModel, PageMsg)
 import Application.Types exposing (GlobalMsg)
 import Browser exposing (Document)
 import Core.Types exposing (Application(..), Model, Msg(..))
-import Html.Styled as Html exposing (Html, toUnstyled)
+import Html as Html exposing (Html)
 import Layout.Types exposing (Layout)
 import Page.Types exposing (Page)
 
@@ -49,5 +49,5 @@ viewWith layout model pageView toMsg subModel =
 mkDocument : Layout -> Model -> String -> Html Msg -> Document Msg
 mkDocument layout model title contents =
     { title = title
-    , body = List.map toUnstyled (layout model.t model.config.i18n contents)
+    , body = layout model.t model.config.i18n contents
     }

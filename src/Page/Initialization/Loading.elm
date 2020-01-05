@@ -1,34 +1,39 @@
 module Page.Initialization.Loading exposing (view)
 
 import Css as Css exposing (..)
-import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (..)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Html.Styled as Styled
+import Html.Styled.Attributes as Attributes exposing (css)
+import Material.Typography as Typography
 
 
 view : { title : String, html : Html msg }
 view =
     let
-        errorText =
+        headline =
             "Initializing..."
 
         content =
-            div
-                [ css
-                    [ displayFlex
-                    , Css.height (pct 100)
-                    , Css.width (pct 100)
-                    , alignItems center
-                    , justifyContent center
-                    ]
-                ]
-                [ div
+            Styled.toUnstyled <|
+                Styled.div
                     [ css
                         [ displayFlex
-                        , Css.width auto
-                        , textAlign center
+                        , Css.height (pct 100)
+                        , Css.width (pct 100)
+                        , alignItems center
+                        , justifyContent center
                         ]
+                    , Attributes.fromUnstyled Typography.headline6
                     ]
-                    [ h1 [] [ text errorText ] ]
-                ]
+                    [ Styled.div
+                        [ css
+                            [ displayFlex
+                            , Css.width auto
+                            , textAlign center
+                            ]
+                        ]
+                        [ Styled.h1 [] [ Styled.text headline ] ]
+                    ]
     in
-    { title = errorText, html = content }
+    { title = headline, html = content }

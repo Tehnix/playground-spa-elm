@@ -2,9 +2,26 @@ module Page.Home exposing (Model, Msg, init, update, view)
 
 import Application.Types exposing (GlobalModel, GlobalMsg)
 import Helper.Bool exposing (bool, when)
-import Html.Styled exposing (..)
-import Html.Styled.Attributes exposing (..)
-import Html.Styled.Events exposing (onClick, onInput)
+import Html exposing (..)
+import Html.Attributes exposing (..)
+import Material.Button exposing (buttonConfig)
+import Material.Card
+    exposing
+        ( card
+        , cardActionButton
+        , cardActionIcon
+        , cardActions
+        , cardBlock
+        , cardConfig
+        )
+import Material.HelperText exposing (helperText, helperTextConfig)
+import Material.IconButton exposing (iconButtonConfig)
+import Material.TextField
+    exposing
+        ( textField
+        , textFieldConfig
+        )
+import Material.Typography as Typography
 import Page.Types exposing (Page)
 
 
@@ -17,6 +34,7 @@ type alias Model =
 type Msg
     = ReverseText
     | ChangeInput String
+    | ClearText
 
 
 init : Model
@@ -27,12 +45,43 @@ init =
 view : Page Model Msg
 view t _ model =
     let
+        cardPadding =
+            style "padding" "8px"
+
+        cardMargin =
+            style "margin" "10px"
+
         content =
-            div []
-                [ input [ placeholder (t { k = "sharedTextToReverse", default = "Text to reverse" }), value model.text, onInput ChangeInput ] []
-                , div [] [ text (when model.showReversed String.reverse model.text) ]
-                , button [ onClick ReverseText ] [ text (t { k = "sharedReverseText", default = "Reverse Text" }) ]
-                ]
+            card { cardConfig | additionalAttributes = [ cardPadding, cardMargin ] }
+                { blocks =
+                    [ cardBlock <|
+                        div []
+                            [ h2 [ Typography.headline5 ] [ text "Title" ]
+                            ]
+                    , cardBlock <|
+                        div []
+                            [ textField
+                                { textFieldConfig
+                                    | label = Just <| t { k = "sharedTextToReverse", default = "Text to reverse" }
+                                    , value = model.text
+                                    , onInput = Just ChangeInput
+                                }
+                            , helperText { helperTextConfig | persistent = True } (when model.showReversed String.reverse model.text)
+                            ]
+                    ]
+                , actions =
+                    Just <|
+                        cardActions
+                            { buttons =
+                                [ cardActionButton { buttonConfig | onClick = Just ReverseText }
+                                    (t { k = "sharedReverseText", default = "Reverse Text" })
+                                ]
+                            , icons =
+                                [ cardActionIcon { iconButtonConfig | onClick = Just ClearText }
+                                    "delete"
+                                ]
+                            }
+                }
     in
     { title = t { k = "titleItem", default = "Item" }, html = content }
 
@@ -45,3 +94,6 @@ update _ msg model =
 
         ChangeInput newText ->
             ( { model | text = newText }, Cmd.none, Cmd.none )
+
+        ClearText ->
+            ( { model | text = "" }, Cmd.none, Cmd.none )

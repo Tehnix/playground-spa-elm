@@ -4,7 +4,6 @@ import Application.Page as Page
 import Application.Page.Types exposing (PageModel(..), PageMsg(..))
 import Browser exposing (Document)
 import Core.Types exposing (Application(..), Msg(..))
-import Html.Styled exposing (toUnstyled)
 import Layout.Theme
 import Page.Initialization.Failed as InitializationFailed
 import Page.Initialization.Loading as Initializating
@@ -22,7 +21,7 @@ view application =
                     Initializating.view
             in
             { title = title
-            , body = [ toUnstyled html ]
+            , body = [ html ]
             }
 
         FailedToInitialize err ->
@@ -31,7 +30,7 @@ view application =
                     InitializationFailed.view err
             in
             { title = title
-            , body = [ toUnstyled Layout.Theme.globalStyle, toUnstyled html ]
+            , body = [ Layout.Theme.globalStyle, html ]
             }
 
         Ready model ->

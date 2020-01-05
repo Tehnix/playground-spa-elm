@@ -3,11 +3,10 @@ module Layout.Page exposing (body, menu)
 import Application.Types as Route exposing (GlobalMsg(..))
 import Core.I18n.Types exposing (I18n, Language(..), Translate)
 import Core.Types exposing (Msg(..))
-import Css exposing (..)
 import Dict as Dict
 import Helper.Route exposing (toUrl)
-import Html.Styled as Html exposing (..)
-import Html.Styled.Attributes as Attributes exposing (..)
+import Html as Html exposing (..)
+import Html.Attributes exposing (..)
 import Layout.Theme
 import Layout.Types exposing (Layout)
 import Material.Button exposing (buttonConfig, raisedButton)
@@ -26,10 +25,10 @@ menu : Translate -> I18n -> Html GlobalMsg
 menu t i18n =
     let
         inline =
-            display inlineBlock
+            style "display" "inline-block"
 
         padded =
-            padding (px 10)
+            style "padding" "10px"
 
         links =
             [ { route = Route.Home, display = "Home" }
@@ -38,12 +37,12 @@ menu t i18n =
             ]
 
         menuLink link =
-            a [ css [ inline, padded ], Attributes.fromUnstyled Typography.body1, href (toUrl link.route) ] [ text link.display ]
+            a [ inline, padded, Typography.body1, href (toUrl link.route) ] [ text link.display ]
 
         langBtn ( lang, _ ) =
-            Html.fromUnstyled <| raisedButton { buttonConfig | onClick = Just (ChangeLanguage (Language lang)) } lang
+            raisedButton { buttonConfig | onClick = Just (ChangeLanguage (Language lang)) } lang
     in
-    div [ css [ padded, borderBottom3 (px 1) solid (hex "c0c0c0") ] ] <|
+    div [ padded, style "border-bottom" "1px solid #c0c0c0" ] <|
         List.map menuLink links
-            ++ a [ css [ inline, padded ], Attributes.fromUnstyled Typography.body1, href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
+            ++ a [ inline, padded, Typography.body1, href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
             :: List.map langBtn (Dict.toList i18n.supportedLanguages)

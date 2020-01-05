@@ -1,0 +1,21 @@
+// Find variables here https://github.com/material-components/material-components-web/blob/master/packages/mdc-theme/_variables.scss.
+$mdc-theme-primary: #0c2e3d;
+$mdc-theme-secondary: #269ae0;
+$mdc-theme-error: #ff5300;
+$mdc-theme-background: rgb(248, 253, 252);
+
+// $mdc-theme-surface: #fff;
+// $mdc-theme-on-primary: #fff;
+// $mdc-theme-on-secondary: #fff;
+// $mdc-theme-on-error: #fff;
+// $mdc-theme-on-surface: #fff;
+
+@import "@material/theme/mdc-theme";
+
+// Force the body to have our theme background color, since Elm will wipe its classes
+// on init.
+body {
+  background-color: $mdc-theme-background;
+  /* @alternate */
+  background-color: var(--mdc-theme-background, $mdc-theme-background);
+}
