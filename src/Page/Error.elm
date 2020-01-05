@@ -1,12 +1,12 @@
 module Page.Error exposing (view)
 
-import Core.I18n.Types exposing (Translate)
-import Global as Global
-import Html.Styled.Attributes exposing (..)
+import Application.I18n.Types exposing (Translate)
+import Application.Types exposing (GlobalModel)
 import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
 
 
-view : Translate -> Global.Model -> String -> { title : String, html : Html msg }
+view : Translate -> GlobalModel -> String -> { title : String, html : Html msg }
 view t _ error =
     let
         errorText =

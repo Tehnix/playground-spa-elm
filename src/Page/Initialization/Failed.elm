@@ -1,7 +1,7 @@
 module Page.Initialization.Failed exposing (view)
 
-import Html.Styled.Attributes exposing (..)
 import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
 
 
 view : String -> { title : String, html : Html msg }

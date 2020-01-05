@@ -4,5 +4,11 @@
     "i18n": "json",
     "shared": "json",
     "title": "json"
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "tests/VerifyExamples/*": true
   }
 }

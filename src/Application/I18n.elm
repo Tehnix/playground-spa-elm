@@ -1,9 +1,9 @@
-module Application.I18n exposing (decoder, initI18n, t, t_)
+module Application.I18n exposing (decodeSupportedLanguages, decoder, initI18n, langToString, t, t_)
 
-import Application.I18n.Types exposing (I18n, Language, Translate)
+import Application.I18n.Types exposing (I18n, Language(..), Namespace(..), SupportedLanguage, Translate, Version(..))
 import Dict as Dict exposing (Dict)
 import I18Next exposing (Translations, initialTranslations, translationsDecoder)
-import Json.Decode as Decode exposing (Decoder, list, string)
+import Json.Decode as Decode exposing (Decoder, bool, list, string)
 import Json.Decode.Pipeline exposing (required)
 
 
@@ -11,26 +11,34 @@ import Json.Decode.Pipeline exposing (required)
 -}
 fallbackLanguage : Language
 fallbackLanguage =
-    "en"
+    Language "en"
+
+
+{-| Unwrap a language newtype.
+-}
+langToString : Language -> String
+langToString (Language l) =
+    l
 
 
 {-| Create the initial translation entry, which will have the language
 set as our fallback language.
 -}
-initialLanguageSingleton : Translations -> Decoder (Dict Language Translations)
+initialLanguageSingleton : Translations -> Decoder (Dict String Translations)
 initialLanguageSingleton translation =
-    Decode.succeed (Dict.singleton fallbackLanguage translation)
+    Decode.succeed (Dict.singleton (langToString fallbackLanguage) translation)
 
 
 {-| Construct an initial i18n object.
 -}
 initI18n : I18n
 initI18n =
-    { translations = Dict.singleton fallbackLanguage initialTranslations
-    , supportedLanguages = []
+    { translations = Dict.singleton (langToString fallbackLanguage) initialTranslations
+    , supportedLanguages = Dict.empty
     , selectedLanguage = fallbackLanguage
     , i18nUrl = ""
     , i18nProjectId = ""
+    , appendDotJson = False
     }
 
 
@@ -40,10 +48,11 @@ decoder : Decoder I18n
 decoder =
     Decode.succeed I18n
         |> required "translations" (decodeTranslation |> Decode.andThen initialLanguageSingleton)
-        |> required "supportedLanguages" (list string)
-        |> required "selectedLanguage" string
+        |> required "supportedLanguages" decodeSupportedLanguages
+        |> required "selectedLanguage" (Decode.map Language string)
         |> required "i18nUrl" string
         |> required "i18nProjectId" string
+        |> required "appendDotJson" bool
 
 
 {-| We try to decode the translations, but make sure to fall back to the
@@ -55,6 +64,33 @@ decodeTranslation =
         [ translationsDecoder
         , Decode.succeed initialTranslations
         ]
+
+
+cleanupDecoderLanguage : ( String, SupportedLanguage ) -> ( String, SupportedLanguage )
+cleanupDecoderLanguage ( l, s ) =
+    let
+        cleaned =
+            case String.split "-" l of
+                firstPart :: _ ->
+                    firstPart
+
+                [] ->
+                    ""
+    in
+    ( cleaned, s )
+
+
+decodeSupportedLanguages : Decoder (Dict String SupportedLanguage)
+decodeSupportedLanguages =
+    Decode.map (Dict.fromList << List.map cleanupDecoderLanguage) (Decode.keyValuePairs decodeSupportedLanguage)
+
+
+decodeSupportedLanguage : Decoder SupportedLanguage
+decodeSupportedLanguage =
+    Decode.succeed SupportedLanguage
+        |> required "name" Decode.string
+        |> required "nativeName" Decode.string
+        |> required "isReferenceLanguage" Decode.bool
 
 
 {-| Attempt to translate a given key, falling back to the supplied default value.
@@ -100,7 +136,7 @@ E.g.
     import I18Next
     import Json.Decode as Decode
     import Dict as Dict exposing (Dict)
-    import Core.I18n exposing (t_)
+    import Application.I18n exposing (t_)
 
     fakeFrTranslations : I18Next.Translations
     fakeFrTranslations =
@@ -129,11 +165,11 @@ E.g.
     --> "Different goodbye"
 
 -}
-t : Language -> Dict Language Translations -> Translate
-t selectedLanguage translations target =
+t : Language -> Dict String Translations -> Translate
+t (Language selectedLanguage) translations target =
     let
         fallbackCase =
-            case Dict.get fallbackLanguage translations of
+            case Dict.get (langToString fallbackLanguage) translations of
                 Just selectedTranslations ->
                     t_ selectedTranslations target
 

@@ -5,11 +5,12 @@ import Helper.Maybe exposing (maybe)
 import Url.Builder as UrlBuilder
 
 
-{-| Construct a title from our @Route@ object, and return an absolute
-URL as a string to be used in as the href for a link.
+{-| Convert our `Route` , into an absolute URL as a string
+to be used in as the href for a link.
 
 E.g.
 
+    import Application.Route exposing (Route(..))
     toUrl <| Item (Just { from = Just "test", to = Nothing })
     --> "/item?from=test"
 

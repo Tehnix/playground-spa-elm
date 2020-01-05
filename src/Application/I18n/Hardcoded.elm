@@ -5,7 +5,7 @@ external service to fetch translations and you can initialize the application
 much quicker.
 -}
 
-import Application.I18n.Types exposing (Language)
+import Application.I18n.Types exposing (Language(..), SupportedLanguage)
 import Dict as Dict exposing (Dict)
 import I18Next exposing (Translations, initialTranslations)
 
@@ -13,17 +13,18 @@ import I18Next exposing (Translations, initialTranslations)
 {-| The supported translations in the application. Make sure to add the language
 to your translations dictionary as well, after adding it here.
 -}
-supportedLanguages : List String
+supportedLanguages : Dict String SupportedLanguage
 supportedLanguages =
-    [ "en"
-    , "de"
-    , "it"
-    ]
+    Dict.fromList
+        [ ( "en", { name = "English", nativeName = "English", isReferenceLanguage = True } )
+        , ( "de", { name = "German", nativeName = "Deutsch", isReferenceLanguage = False } )
+        , ( "it", { name = "Italian", nativeName = "Italiano", isReferenceLanguage = True } )
+        ]
 
 
 {-| The available translations.
 -}
-translations : Dict Language Translations
+translations : Dict String Translations
 translations =
     Dict.singleton "en" langEn
 

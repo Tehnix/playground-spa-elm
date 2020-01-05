@@ -4,12 +4,39 @@ import Application.Config exposing (Config)
 import Application.I18n as I18n
 import Application.I18n.Types as I18n
 import Application.Route exposing (Route)
+import Application.Types exposing (GlobalModel, GlobalMsg)
 import Browser exposing (UrlRequest)
 import Browser.Navigation as Nav
-import Global as Global
 import Page.Home as Home
 import Page.Item as Item
 import Url exposing (Url)
+
+
+{-| The `PageModel` is a union type of all pages. This allows us to
+pattern match directly in our `view` function, to decide which page
+we should display. Alternatively we would have to dig into the route.
+
+When adding a new page, you will want to update this with the page
+model.
+
+-}
+type PageModel
+    = NotFound
+    | Home Home.Model
+    | Item Item.Model
+
+
+{-| The `PageMsg` is a union type of all pages. This allows us to
+group page updaes into the same case, and extract them from the
+core update handler.
+
+When adding a new page, you will want to update this with the page
+msg.
+
+-}
+type PageMsg
+    = HomeMsg Home.Msg
+    | ItemMsg Item.Msg
 
 
 {-| The `Application` is where we track our application state, at
@@ -31,30 +58,13 @@ type alias Model =
     , route : Maybe Route
     , config : Config
     , t : I18n.TranslationKey -> String
-    , global : Global.Model
+    , global : GlobalModel
     , pageModel : PageModel
     }
 
 
-{-| The `PageModel` is a union type of all pages. This allows us to
-pattern match directly in our `view` function, to decide which page
-we should display. Alternatively we would have to dig into the route.
-
-When adding a new page, you will want to update this with the page
-model.
-
--}
-type PageModel
-    = NotFound
-    | Home Home.Model
-    | Item Item.Model
-
-
 {-| The `Msg` type is what defines the possible actions in our application,
 and is what `update` acts on.
-
-When adding a new page, you will want to update this with the page msg.
-
 -}
 type
     Msg
@@ -62,11 +72,6 @@ type
     = UrlChanged Url
     | LinkClicked UrlRequest
       -- Global events.
-    | GlobalMsg Global.Msg
+    | GlobalMsg GlobalMsg
       -- Our page events.
     | PageMsg PageMsg
-
-
-type PageMsg
-    = HomeMsg Home.Msg
-    | ItemMsg Item.Msg

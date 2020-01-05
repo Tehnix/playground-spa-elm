@@ -95,6 +95,10 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [5 Common JSON Decoders](https://thoughtbot.com/blog/5-common-json-decoders)
 - [Beginning JSON Decoding](https://elmprogramming.com/decoding-json-part-2.html)
 
+**Tools:**
+
+- [Handy JSON Decoder Generator](https://noredink.github.io/json-to-elm/) (fine for the initial decoding)
+
 **Testing:**
 
 - [elm-program-test](https://discourse.elm-lang.org/t/elm-program-test-3-0-0-new-docs-support-for-http-and-ports/4235)
@@ -110,3 +114,4 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Debug](https://package.elm-lang.org/packages/elm-lang/core/3.0.0/Debug)
 - [Json Decode](https://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode) / [Decode Pipeline](https://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest/)
 - [I18next](https://package.elm-lang.org/packages/ChristophP/elm-i18next/latest/I18Next)
+- [CSS](https://package.elm-lang.org/packages/rtfeldman/elm-css/latest/)

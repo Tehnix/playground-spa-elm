@@ -3,10 +3,11 @@ module Application.Core.Init exposing (init)
 import Application.Config as Config
 import Application.Core.Route as Route
 import Application.Core.Types exposing (Application(..), Msg(..), PageModel(..), PageMsg(..))
+import Application.Global as Global
 import Application.I18n as I18n
+import Application.I18n.Locize as I18n
 import Application.I18n.Types as I18n
 import Browser.Navigation as Nav
-import Global as Global
 import Json.Decode as Decode
 import Json.Encode as Encode
 import Url exposing (Url)
@@ -33,8 +34,11 @@ init flags url navKey =
                     , global = Global.init
                     , pageModel = Route.toPageModel Nothing Nothing route
                     }
+
+                initializeI18n =
+                    List.map (Cmd.map GlobalMsg) (I18n.initializeLocize config.i18n)
             in
-            ( Ready initialModel, Cmd.none )
+            ( Ready initialModel, Cmd.batch initializeI18n )
 
         Err err ->
             ( FailedToInitialize (Decode.errorToString err), Cmd.none )

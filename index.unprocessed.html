@@ -38,9 +38,9 @@
         const languageCookie = getCookieValue("i18next222");
         const languageBrowser = getBrowserLanguage();
         if (languageCookie) {
-          return languageCookie;
+          return languageCookie.split("-")[0];
         }
-        return languageBrowser;
+        return languageBrowser.split("-")[0];
       }
 
       const selectedLanguage = selectLanguage();
@@ -57,10 +57,11 @@
         setTimeout(function() {
           resolve({
             selectedLanguage,
-            supportedLanguages: [], // Retrieved after init.
+            supportedLanguages: {}, // Retrieved after init.
             translations: {}, // Retrieved after init.
             i18nProjectId,
-            i18nUrl
+            i18nUrl,
+            appendDotJson: stage === "development" ? true : false
           });
         }, 500);
       });

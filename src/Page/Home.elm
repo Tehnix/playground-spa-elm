@@ -1,6 +1,6 @@
 module Page.Home exposing (Model, Msg, init, update, view)
 
-import Global as Global
+import Application.Types exposing (GlobalModel, GlobalMsg)
 import Helper.Bool exposing (bool, when)
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
@@ -37,7 +37,7 @@ view t _ model =
     { title = t { k = "title.item", default = "Item" }, html = content }
 
 
-update : Global.Model -> Msg -> Model -> ( Model, Cmd Msg, Cmd Global.Msg )
+update : GlobalModel -> Msg -> Model -> ( Model, Cmd Msg, Cmd GlobalMsg )
 update _ msg model =
     case msg of
         ReverseText ->
