@@ -1,19 +1,21 @@
-module Api.Repositories exposing (..)
+module Api.Repositories exposing (IssueNode, IssueNodeData, Issues, Repository, query)
 
+import Api.GitHub.Enum.IssueState exposing (IssueState(..))
 import Api.GitHub.Object
 import Api.GitHub.Object.Issue as Issue
 import Api.GitHub.Object.IssueConnection as IssueConnection
 import Api.GitHub.Object.IssueEdge as IssueEdge
 import Api.GitHub.Object.Repository as Repository
 import Api.GitHub.Query as Query
-import Api.GitHub.Scalar exposing (Id(..))
+import Api.GitHub.ScalarCodecs
 import Graphql.Operation exposing (RootQuery)
-import Graphql.SelectionSet as SelectionSet exposing (SelectionSet, with)
+import Graphql.OptionalArgument exposing (OptionalArgument(..))
+import Graphql.SelectionSet as SelectionSet exposing (SelectionSet)
 
 
-query : SelectionSet (Maybe Repository) RootQuery
-query =
-    Query.repository { name = "playground-elm-spa", owner = "Tehnix" } repositorySelection
+query : { name : String, owner : String } -> SelectionSet Repository RootQuery
+query { name, owner } =
+    Query.repository { name = name, owner = owner } repositorySelection |> SelectionSet.nonNullOrFail
 
 
 type alias Repository =
@@ -33,27 +35,30 @@ type alias IssueNode =
 
 type alias IssueNodeData =
     { title : String
-    , url : String
+    , url : Api.GitHub.ScalarCodecs.Uri
     }
 
 
 repositorySelection : SelectionSet Repository Api.GitHub.Object.Repository
 repositorySelection =
-    SelectionSet.succeed Repository
-        |> with Repository.issues issues
+    SelectionSet.map Repository
+        (Repository.issues (\optionals -> { optionals | last = Present 10, states = Present [ Closed ] }) issues)
 
 
+issues : SelectionSet Issues Api.GitHub.Object.IssueConnection
 issues =
-    SelectionSet.succeed Issues
-        |> with IssueConnection.edges issuesNode
+    SelectionSet.map Issues
+        (IssueConnection.edges issuesNode |> SelectionSet.nonNullOrFail |> SelectionSet.nonNullElementsOrFail)
 
 
+issuesNode : SelectionSet IssueNode Api.GitHub.Object.IssueEdge
 issuesNode =
-    SelectionSet.succeed IssueNode
-        |> with IssueEdge.node issuesNodeData
+    SelectionSet.map IssueNode
+        (IssueEdge.node issuesNodeData |> SelectionSet.nonNullOrFail)
 
 
+issuesNodeData : SelectionSet IssueNodeData Api.GitHub.Object.Issue
 issuesNodeData =
-    SelectionSet.succeed IssueNodeData
-        |> with Issue.title
-        |> with Issue.url
+    SelectionSet.map2 IssueNodeData
+        Issue.title
+        Issue.url

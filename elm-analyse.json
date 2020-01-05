@@ -1,6 +1,7 @@
 {
   "checks": {
-    "ImportAll": false
+    "ImportAll": false,
+    "SingleFieldRecord": false
   },
   "TriggerWords": {
     "words": [

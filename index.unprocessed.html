@@ -57,7 +57,8 @@
       }
 
       const stage = process.env.STAGE; // "development"
-      const accessToken = getCookieValue("accessToken");
+      const accessToken =
+        getCookieValue("accessToken") || process.env.DEV_ACCESS_TOKEN;
       const authUrl = process.env.AUTH_URL;
       const authClientId = process.env.AUTH_CLIENT_ID;
       const apiUrl = process.env.API_URL; // "https://api.github.com/graphql"

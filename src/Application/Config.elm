@@ -1,4 +1,4 @@
-module Application.Config exposing (AccessToken, Config, Stage, decoder)
+module Application.Config exposing (AccessToken(..), Config, Stage, decoder)
 
 import Core.I18n as I18n
 import Core.I18n.Types exposing (I18n)

@@ -28,6 +28,10 @@ const REPLACEMENTS = [
   { target: "process.env.I18N_URL", value: process.env.I18N_URL },
   { target: "process.env.AUTH_URL", value: process.env.AUTH_URL },
   { target: "process.env.AUTH_CLIENT_ID", value: process.env.AUTH_CLIENT_ID },
+  {
+    target: "process.env.DEV_ACCESS_TOKEN",
+    value: process.env.DEV_ACCESS_TOKEN || ""
+  },
   { target: "ASSETS_PATH", value: process.env.ASSETS_PATH, raw: true }
 ];
 

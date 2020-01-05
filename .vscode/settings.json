@@ -20,5 +20,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "elm-stuff": true
-  }
+  },
+  "outline.problems.colors": true,
+  "problems.showCurrentInStatus": true
 }

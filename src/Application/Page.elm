@@ -21,14 +21,14 @@ update : Model -> PageMsg -> PageModel -> ( Model, Cmd Msg )
 update model pageMsg pageModel =
     case ( pageMsg, pageModel ) of
         ( ItemMsg subMsg, Item subModel ) ->
-            Item.update model.global subMsg subModel
+            Item.update model.config model.global subMsg subModel
                 |> updateWith model Item ItemMsg
 
         ( ItemMsg _, _ ) ->
             ( model, Cmd.none )
 
         ( HomeMsg subMsg, Home subModel ) ->
-            Home.update model.global subMsg subModel
+            Home.update model.config model.global subMsg subModel
                 |> updateWith model Home HomeMsg
 
         ( HomeMsg _, _ ) ->
