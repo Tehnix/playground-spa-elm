@@ -137,6 +137,7 @@ E.g.
     import Json.Decode as Decode
     import Dict as Dict exposing (Dict)
     import Core.I18n exposing (t_)
+    import Core.I18n.Types exposing (Language(..))
 
     fakeFrTranslations : I18Next.Translations
     fakeFrTranslations =
@@ -155,13 +156,13 @@ E.g.
         , ("fr", fakeFrTranslations)
         ]
 
-    t "fr" fakeTranslations { k = "greet", default = "Different goodbye" }
+    t (Language "fr") fakeTranslations { k = "greet", default = "Different goodbye" }
     --> "Bonjour"
 
-    t "fr" fakeTranslations { k = "goodbye", default = "Different goodbye" }
+    t (Language "fr") fakeTranslations { k = "goodbye", default = "Different goodbye" }
     --> "Goodbye"
 
-    t "fr" fakeTranslations { k = "wrongGoodbye", default = "Different goodbye" }
+    t (Language "fr") fakeTranslations { k = "wrongGoodbye", default = "Different goodbye" }
     --> "Different goodbye"
 
 -}

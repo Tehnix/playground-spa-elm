@@ -44,6 +44,5 @@ menu t i18n =
     in
     div [ css [ padded, borderBottom3 (px 1) solid (hex "c0c0c0") ] ] <|
         List.map menuLink links
-            ++ [ a [ css [ inline, padded ], href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
-               ]
-            ++ List.map langBtn (Dict.toList i18n.supportedLanguages)
+            ++ a [ css [ inline, padded ], href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
+            :: List.map langBtn (Dict.toList i18n.supportedLanguages)

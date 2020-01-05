@@ -11,7 +11,7 @@
     "start": "npm run dev",
     "test": "elm-test",
     "test:watch": "elm-test --watch",
-    "test:verify": "elm-verify-examples --run-tests",
+    "test:verify": "elm-verify-examples && elm-test",
     "dev": "STAGE=development npm run --silent build:pre-process && npm run build:elm:compile:dev && npm run dev:elm:live",
     "dev:elm:live": "elm-live src/Main.elm --start-page=dist/index.html --hot --open --pushstate --port=1234 -- --output=dist/elm.js --debug",
     "build": "npm run build:pre-process && npm run build:elm:compile && npm run build:minify",
