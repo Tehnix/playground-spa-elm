@@ -1,0 +1,30 @@
+{
+  "en": {
+    "name": "English",
+    "nativeName": "English",
+    "isReferenceLanguage": true,
+    "translated": {
+      "latest": 1,
+      "production": 1
+    }
+  },
+  "de-CH": {
+    "name": "German",
+    "nativeName": "Deutsch",
+    "region": "CH",
+    "isReferenceLanguage": false,
+    "translated": {
+      "latest": 1,
+      "production": 0.521
+    }
+  },
+  "it": {
+    "name": "Italian",
+    "nativeName": "Italiano",
+    "isReferenceLanguage": false,
+    "translated": {
+      "latest": 1,
+      "production": 1
+    }
+  }
+}

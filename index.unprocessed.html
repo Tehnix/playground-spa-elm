@@ -43,46 +43,41 @@
         return languageBrowser;
       }
 
-      /**
-       * Fetch translations and supported languages.
-       */
-      const fetchTranslations = new Promise(function(resolve, reject) {
-        const selectedLanguage = selectLanguage();
-        // This information should be fetched from a server.
-        const supportedLanguages = ["en", "da", "fr"];
-        const fakeTranslations = {
-          title: {
-            item: "Item!",
-            notFound: "Not Found!"
-          },
-          shared: {
-            textToReverse: "Text To Reverse",
-            reverseText: "Reverse Text"
-          }
-        };
+      const selectedLanguage = selectLanguage();
+      const accessToken = getCookieValue("accessToken");
+      const authUrl = process.env.AUTH_URL;
+      const authClientId = process.env.AUTH_CLIENT_ID;
+      const apiUrl = process.env.API_URL; // "https://api.github.com/graphql"
+      const stage = process.env.STAGE; // "development"
+      const i18nProjectId = process.env.I18N_PROJECT;
+      const i18nUrl = process.env.I18N_URL;
+
+      const fakeDelay = new Promise(function(resolve, reject) {
         // Simulate loading time.
         setTimeout(function() {
           resolve({
             selectedLanguage,
-            supportedLanguages,
-            translations: fakeTranslations
+            supportedLanguages: [], // Retrieved after init.
+            translations: {}, // Retrieved after init.
+            i18nProjectId,
+            i18nUrl
           });
         }, 500);
       });
 
-      const accessToken = getCookieValue("accessToken");
-      const apiUrl = process.env.API_URL; // "https://api.github.com/graphql"
-      const stage = process.env.STAGE; // "development"
-
       /**
-       * Start the Elm app when translations have downloaded.
+       * Start the Elm app.
        */
-      fetchTranslations.then(function(i18n) {
+      fakeDelay.then(function(i18n) {
         const app = Elm.Main.init({
           flags: {
             stage,
             apiUrl,
-            accessToken,
+            auth: {
+              accessToken,
+              authUrl,
+              authClientId
+            },
             i18n
           }
         });

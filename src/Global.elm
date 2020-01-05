@@ -5,8 +5,10 @@ might need to access (via the model) or trigger events (via the msg),
 such as user information or logout events.
 -}
 
+import Application.I18n.Types exposing (I18n, Language)
 
-{-| The @Model@ keeps track of shared state in our application.
+
+{-| The `Model` keeps track of shared state in our application.
 -}
 type alias Model =
     { user : User
@@ -14,11 +16,12 @@ type alias Model =
     }
 
 
-{-| The @Msg@ type is what defines the possible actions in our application,
+{-| The `Msg` type is what defines the possible actions in our application,
 at a global level, such as authentication and logout.
 -}
 type Msg
     = Authentication User
+    | ChangeLanguage Language
 
 
 type alias UserInfo =
@@ -37,8 +40,11 @@ init =
     { user = Unauthenticated, language = "en" }
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update : Msg -> Model -> I18n -> ( Model, I18n, Cmd Msg )
+update msg model i18n =
     case msg of
         Authentication user ->
-            ( { model | user = user }, Cmd.none )
+            ( { model | user = user }, i18n, Cmd.none )
+
+        ChangeLanguage l ->
+            Debug.todo ("Load the translations for language:" ++ l)

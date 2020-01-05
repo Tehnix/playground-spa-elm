@@ -23,7 +23,11 @@ require("dotenv").config({ path: dotenvPath });
  */
 const REPLACEMENTS = [
   { target: "process.env.API_URL", value: process.env.API_URL },
-  { target: "process.env.STAGE", value: process.env.STAGE }
+  { target: "process.env.STAGE", value: process.env.STAGE },
+  { target: "process.env.I18N_PROJECT", value: process.env.I18N_PROJECT },
+  { target: "process.env.I18N_URL", value: process.env.I18N_URL },
+  { target: "process.env.AUTH_URL", value: process.env.AUTH_URL },
+  { target: "process.env.AUTH_CLIENT_ID", value: process.env.AUTH_CLIENT_ID }
 ];
 
 /**

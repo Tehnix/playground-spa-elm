@@ -1,11 +1,11 @@
 module Page.Home exposing (Model, Msg, init, update, view)
 
-import Core.I18n exposing (Translate)
 import Global as Global
 import Helper.Bool exposing (bool, when)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (onClick, onInput)
+import Page.Types exposing (Page)
 
 
 type alias Model =
@@ -24,7 +24,7 @@ init =
     { text = "", showReversed = False }
 
 
-view : Translate -> Global.Model -> Model -> { title : String, html : Html Msg }
+view : Page Model Msg
 view t _ model =
     let
         content =

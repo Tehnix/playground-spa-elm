@@ -1,25 +1,48 @@
-module Layout exposing (body, menu)
+module Layout exposing (globalStyles, menu, theme)
 
-import Core.Route as Route
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Application.I18n.Types exposing (I18n)
+import Application.Route as Route
+import Css as Css exposing (..)
+import Css.Global exposing (global)
+import Global as Global
+import Helper.Route exposing (toUrl)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (onClick)
 
 
-body : Html msg -> List (Html msg)
-body contents =
-    [ menu
-    , contents
-    ]
+theme : { secondary : Color, primary : Color }
+theme =
+    { primary = hex "55af6a"
+    , secondary = rgb 250 240 230
+    }
 
 
-menu : Html msg
-menu =
+globalStyles : Html msg
+globalStyles =
+    Css.Global.global
+        [ Css.Global.html
+            [ backgroundColor (rgb 248 253 252)
+            , Css.height (pct 100)
+            , Css.width (pct 100)
+            ]
+        , Css.Global.body
+            [ displayFlex
+            , Css.height (pct 100)
+            , Css.width (pct 100)
+            , flexDirection column
+            ]
+        ]
+
+
+menu : I18n -> Html Global.Msg
+menu i18n =
     let
         inline =
-            style "display" "inline-block"
+            display inlineBlock
 
         padded =
-            style "padding" "10px"
+            padding (px 10)
 
         links =
             [ { route = Route.Home, display = "Home" }
@@ -28,8 +51,9 @@ menu =
             ]
 
         menuLink link =
-            a [ inline, padded, href (Route.toUrl link.route) ] [ text link.display ]
+            a [ css [ inline, padded ], href (toUrl link.route) ] [ text link.display ]
     in
-    div [ padded, style "border-bottom" "1px solid #c0c0c0" ] <|
+    div [ css [ padded, borderBottom3 (px 1) solid (hex "c0c0c0") ] ] <|
         List.map menuLink links
-            ++ [ a [ inline, padded, href "/not-found" ] [ text "Not found" ] ]
+            ++ [ a [ css [ inline, padded ], href "/not-found" ] [ text "Not found" ] ]
+            ++ [ button [ onClick (Global.ChangeLanguage "en") ] [ text "en" ] ]

@@ -1,3 +1,8 @@
 {
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "i18n": "json",
+    "shared": "json",
+    "title": "json"
+  }
 }

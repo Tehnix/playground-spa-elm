@@ -1,9 +1,9 @@
 module Page.NotFound exposing (view)
 
-import Core.I18n exposing (Translate)
+import Application.I18n.Types exposing (Translate)
 import Global as Global
-import Html exposing (..)
-import Html.Attributes exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
 
 
 view : Translate -> Global.Model -> { title : String, html : Html msg }

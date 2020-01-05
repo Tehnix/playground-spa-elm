@@ -1,11 +1,11 @@
 module Page.Item exposing (Model, Msg, init, update, view)
 
-import Core.I18n exposing (Translate)
-import Core.Route as Route
+import Application.Route exposing (ItemParameters)
 import Global as Global
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (onClick)
+import Page.Types exposing (Page)
 
 
 type alias Model =
@@ -25,12 +25,12 @@ type Color
     | Red
 
 
-init : Maybe Route.ItemParameters -> Model
+init : Maybe ItemParameters -> Model
 init _ =
     { counter = 0, color = Green }
 
 
-view : Translate -> Global.Model -> Model -> { title : String, html : Html Msg }
+view : Page Model Msg
 view t _ model =
     let
         color =
