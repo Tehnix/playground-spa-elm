@@ -77,7 +77,9 @@ We'll need a project id though, which we'll pass to Elm via init flags, along wi
 
 ### Material-UI
 
-🚧 WIP 🚧
+We use the [material-components-web-elm](https://package.elm-lang.org/packages/aforemny/material-components-web-elm/latest/), which integrates quite smoothly with Elm, and is actively developed. To figure out how to use the components, please refer to the library documentation.
+
+Theming is supported via `theme.scss`, which generates a theme file that overwrites the default colors of the Material Design CSS file we pull in, in `assets/css`. You can build the sass with `npm run build:theme` (it's a part of the build step also).
 
 ### Unit Tests
 We use [elm-test](https://github.com/elm-community/elm-test) to run our unit tests, in the `tests/` folder.
