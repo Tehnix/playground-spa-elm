@@ -7,10 +7,11 @@ import Css exposing (..)
 import Dict as Dict
 import Helper.Route exposing (toUrl)
 import Html.Styled as Html exposing (..)
-import Html.Styled.Attributes exposing (..)
-import Html.Styled.Events exposing (onClick)
+import Html.Styled.Attributes as Attributes exposing (..)
 import Layout.Theme
 import Layout.Types exposing (Layout)
+import Material.Button exposing (buttonConfig, raisedButton)
+import Material.Typography as Typography
 
 
 body : Layout
@@ -37,12 +38,12 @@ menu t i18n =
             ]
 
         menuLink link =
-            a [ css [ inline, padded ], href (toUrl link.route) ] [ text link.display ]
+            a [ css [ inline, padded ], Attributes.fromUnstyled Typography.body1, href (toUrl link.route) ] [ text link.display ]
 
         langBtn ( lang, _ ) =
-            button [ onClick (ChangeLanguage (Language lang)) ] [ text lang ]
+            Html.fromUnstyled <| raisedButton { buttonConfig | onClick = Just (ChangeLanguage (Language lang)) } lang
     in
     div [ css [ padded, borderBottom3 (px 1) solid (hex "c0c0c0") ] ] <|
         List.map menuLink links
-            ++ a [ css [ inline, padded ], href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
+            ++ a [ css [ inline, padded ], Attributes.fromUnstyled Typography.body1, href "/not-found" ] [ text (t { k = "titleNotFound", default = "Not found" }) ]
             :: List.map langBtn (Dict.toList i18n.supportedLanguages)

@@ -1,4 +1,4 @@
-module Layout.Theme exposing (globalStyle, theme)
+module Layout.Theme exposing (globalStyle)
 
 import Css as Css exposing (..)
 import Css.Global exposing (global)
@@ -20,10 +20,3 @@ globalStyle =
             , flexDirection column
             ]
         ]
-
-
-theme : { secondary : Color, primary : Color }
-theme =
-    { primary = hex "55af6a"
-    , secondary = rgb 250 240 230
-    }

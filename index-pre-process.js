@@ -27,7 +27,8 @@ const REPLACEMENTS = [
   { target: "process.env.I18N_PROJECT", value: process.env.I18N_PROJECT },
   { target: "process.env.I18N_URL", value: process.env.I18N_URL },
   { target: "process.env.AUTH_URL", value: process.env.AUTH_URL },
-  { target: "process.env.AUTH_CLIENT_ID", value: process.env.AUTH_CLIENT_ID }
+  { target: "process.env.AUTH_CLIENT_ID", value: process.env.AUTH_CLIENT_ID },
+  { target: "ASSETS_PATH", value: process.env.ASSETS_PATH, raw: true }
 ];
 
 /**
@@ -44,7 +45,11 @@ const processIndex = () => {
   let processedIndex = unprocessedIndex;
   REPLACEMENTS.map(replacement => {
     const re = new RegExp(replacement.target, "g");
-    processedIndex = processedIndex.replace(re, `"${replacement.value}"`);
+    if (replacement.raw && replacement.raw === true) {
+      processedIndex = processedIndex.replace(re, `${replacement.value}`);
+    } else {
+      processedIndex = processedIndex.replace(re, `"${replacement.value}"`);
+    }
   });
   return processedIndex;
 };

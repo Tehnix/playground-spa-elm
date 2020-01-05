@@ -126,4 +126,4 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Debug](https://package.elm-lang.org/packages/elm-lang/core/3.0.0/Debug)
 - [Json Decode](https://package.elm-lang.org/packages/elm-lang/core/5.1.1/Json-Decode) / [Decode Pipeline](https://package.elm-lang.org/packages/NoRedInk/elm-decode-pipeline/latest/)
 - [I18next](https://package.elm-lang.org/packages/ChristophP/elm-i18next/latest/I18Next)
-- [CSS](https://package.elm-lang.org/packages/rtfeldman/elm-css/latest/)
+- [CSS](https://package.elm-lang.org/packages/rtfeldman/elm-css/latest/) / [Material Components](https://package.elm-lang.org/packages/aforemny/material-components-web-elm/latest/)
