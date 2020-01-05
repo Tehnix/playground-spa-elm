@@ -9,7 +9,9 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/*.code-search": true,
-    "tests/VerifyExamples/*": true
+    "tests/VerifyExamples/*": true,
+    "**/*.min.css": true,
+    "**/*.min.js": true
   },
   "files.exclude": {
     "**/.git": true,

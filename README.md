@@ -73,7 +73,17 @@ We'll need a project id though, which we'll pass to Elm via init flags, along wi
 
 ### GraphQL
 
-🚧 WIP 🚧
+We use [Elm GraphQL](https://github.com/dillonkearns/elm-graphql) for making type-safe GraphQL calls in Elm. This works by generating all the code necessary for Elm, by introspecting your schema.
+
+Generate the Elm code from your schema via:
+
+```bash
+$ GITHUB_TOKEN=xxxxxxxxxxxxxxxxxx npm run codegen:api
+```
+
+And the code will be put at `src/Api/GitHub/`.
+
+If you haven't set up a `GITHUB_TOKEN` yet, you can easily do that, by following [Authenticating with the GITHUB_TOKEN](https://help.github.com/en/actions/automating-your-workflow-with-github-actions/authenticating-with-the-github_token).
 
 ### Material-UI
 
@@ -107,6 +117,7 @@ We use Github actions to build the project, run tests, and run doc tests in the 
 - [Real World Elm SPA Example](https://github.com/rtfeldman/elm-spa-example)
 - [5 Common JSON Decoders](https://thoughtbot.com/blog/5-common-json-decoders)
 - [Beginning JSON Decoding](https://elmprogramming.com/decoding-json-part-2.html)
+- [Elm GraphQL](https://github.com/dillonkearns/elm-graphql) ([Motivation](https://medium.com/open-graphql/type-safe-composable-graphql-in-elm-b3378cc8d021) / [Introduction and Book](https://dillonkearns.gitbooks.io/elm-graphql/content/))
 
 **Tools:**
 

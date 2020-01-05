@@ -14,6 +14,7 @@
     "build:elm:compile:dev": "elm make src/Main.elm --output=dist/elm.js",
     "build:pre-process": "node ./index-pre-process.js",
     "build:theme": "sass theme.scss:assets/css/theme.css --load-path=node_modules && postcss assets/css/theme.css --use autoprefixer -o assets/css/theme.css",
+    "codegen:api": "elm-graphql https://api.github.com/graphql --base Api.GitHub --header \"Authorization: bearer $GITHUB_TOKEN\"",
     "dev": "STAGE=development npm run --silent build:pre-process && npm run build:theme && npm run --silent  build:elm:compile:dev && npm run --silent  dev:elm:live",
     "dev:elm:live": "elm-live src/Main.elm --start-page=dist/index.html --hot --open --pushstate --port=1234 -- --output=dist/elm.js --debug",
     "start": "npm run dev",
@@ -24,6 +25,7 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@dillonkearns/elm-graphql": "^4.0.0",
     "@material/theme": "^4.0.0",
     "autoprefixer": "^9.7.3",
     "chokidar-cli": "^2.1.0",
