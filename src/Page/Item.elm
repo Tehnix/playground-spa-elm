@@ -1,5 +1,6 @@
 module Page.Item exposing (Model, Msg, init, update, view)
 
+import Application.Config exposing (Config)
 import Application.Types exposing (GlobalModel, GlobalMsg, ItemParameters)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -96,8 +97,8 @@ view t _ model =
     { title = t { k = "titleItem", default = "Item" }, html = content }
 
 
-update : GlobalModel -> Msg -> Model -> ( Model, Cmd Msg, Cmd GlobalMsg )
-update _ msg model =
+update : Config -> GlobalModel -> Msg -> Model -> ( Model, Cmd Msg, Cmd GlobalMsg )
+update _ _ msg model =
     case msg of
         ToggleColor ->
             case model.color of

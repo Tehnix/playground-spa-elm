@@ -9,7 +9,9 @@
     "**/node_modules": true,
     "**/bower_components": true,
     "**/*.code-search": true,
-    "tests/VerifyExamples/*": true
+    "tests/VerifyExamples/*": true,
+    "**/*.min.css": true,
+    "**/*.min.js": true
   },
   "files.exclude": {
     "**/.git": true,
@@ -18,5 +20,7 @@
     "**/CVS": true,
     "**/.DS_Store": true,
     "elm-stuff": true
-  }
+  },
+  "outline.problems.colors": true,
+  "problems.showCurrentInStatus": true
 }
