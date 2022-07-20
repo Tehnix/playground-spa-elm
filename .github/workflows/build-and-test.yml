@@ -6,46 +6,49 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js 11.6.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 11.6.0
+          node-version: 18
+          cache: 'npm'
       - name: Install dependencies
         run: |
-          npm install -g elm
+          npm install
       - name: Build project
         env:
           CI: true
         run: |
-          elm make src/Main.elm
+          npm run build
 
   Test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js 11.6.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 11.6.0
+          node-version: 18
+          cache: 'npm'
       - name: Install dependencies
         run: |
-          npm install -g elm elm-test elm-verify-examples
+          npm install
       - name: Run tests
         env:
           CI: true
         run: |
-          elm-verify-examples
-          elm-test
+          npm run test:verify
+          npm run test
 
   Analyse:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Use Node.js 11.6.0
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: 11.6.0
+          node-version: 18
+          cache: 'npm'
       - name: Install dependencies
         run: |
           npm install -g elm-analyse
