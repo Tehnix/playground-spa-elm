@@ -30,9 +30,9 @@ const REPLACEMENTS = [
   { target: "process.env.AUTH_CLIENT_ID", value: process.env.AUTH_CLIENT_ID },
   {
     target: "process.env.DEV_ACCESS_TOKEN",
-    value: process.env.DEV_ACCESS_TOKEN || ""
+    value: process.env.DEV_ACCESS_TOKEN || "",
   },
-  { target: "ASSETS_PATH", value: process.env.ASSETS_PATH, raw: true }
+  { target: "ASSETS_PATH", value: process.env.ASSETS_PATH, raw: true },
 ];
 
 /**
@@ -47,7 +47,7 @@ const processIndex = () => {
 
   // Replace our process.env with actual values.
   let processedIndex = unprocessedIndex;
-  REPLACEMENTS.map(replacement => {
+  REPLACEMENTS.map((replacement) => {
     const re = new RegExp(replacement.target, "g");
     if (replacement.raw && replacement.raw === true) {
       processedIndex = processedIndex.replace(re, `${replacement.value}`);
@@ -61,15 +61,20 @@ const processIndex = () => {
 /**
  * Write the index file to disk at `dist/index.html`.
  */
-const writeIndex = index => {
-  fs.writeFileSync("./dist/index.html", index);
+const writeIndex = (index) => {
+  const distPath = "./dist";
+  // If this is the first build ever, the dist folder won't exist yet.
+  if (!fs.existsSync(distPath)) {
+    fs.mkdirSync(distPath);
+  }
+  fs.writeFileSync(`${distPath}/index.html`, index);
 };
 
 /**
  * Validate the we have no more process.env's left in our
  * processed index file.
  */
-const validateIndex = index => {
+const validateIndex = (index) => {
   const lines = index.split("\n");
   const invalidLines = [];
   // Gather all invalid lines.
